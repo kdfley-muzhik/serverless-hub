@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Преимущества и недостатки Serverless — честный анализ | Serverless</title>
+  <meta name="description" content="Честный технический анализ преимуществ и недостатков бессерверной архитектуры: холодный старт, лимиты выполнения, вендор-лок, масштабируемость и экономия.">
+  <meta name="author" content="Ананьин Ефим Вадимович">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon: официальная иконка Milligram CSS -->
+  <link rel="icon" type="image/svg+xml" href="images/milligram-logo.svg">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Шапка сайта -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="brand-wrapper" aria-label="Serverless Главная">
+          <img src="images/logo.svg" alt="Логотип Serverless" class="brand-logo" width="38" height="38">
+          <span class="brand-name">Serverless</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Основная навигация">
+          <ul>
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="about.html" class="nav-link">О Serverless</a></li>
+            <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
+            <li><a href="platforms.html" class="nav-link">Платформы</a></li>
+            <li><a href="pros-cons.html" class="nav-link active">Плюсы и минусы</a></li>
+            <li><a href="use-cases.html" class="nav-link">Примеры</a></li>
+            <li><a href="tutorial.html" class="nav-link">Практика</a></li>
+            <li><a href="security.html" class="nav-link">Безопасность</a></li>
+            <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
+            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
+          </ul>
+        </nav>
+
+                <div class="header-actions">
+          <a href="https://milligram.io" target="_blank" rel="noopener" class="milligram-badge" title="CSS-фреймворк: Milligram (milligram.io)">
+            <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+            <span>Milligram</span>
+          </a>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="Переключить тему оформления" aria-label="Переключить тему">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="burger-btn" class="burger-btn" type="button" title="Открыть мобильное меню" aria-label="Открыть мобильное меню">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Мобильное меню -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Мобильное меню">
+    <div class="mobile-nav-header">
+      <span class="brand-name">Serverless</span>
+      <button id="mobile-nav-close" class="button-clear" type="button" aria-label="Закрыть меню" style="font-size: 2.4rem; padding: 0;">✕</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
+      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
+      <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
+      <li><a href="platforms.html" class="mobile-nav-link">Облачные платформы</a></li>
+      <li><a href="pros-cons.html" class="mobile-nav-link active">Плюсы и минусы</a></li>
+      <li><a href="use-cases.html" class="mobile-nav-link">Примеры использования</a></li>
+      <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
+      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
+      <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
+      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
+    </ul>
+  </aside>
+
+  <!-- Контент страницы -->
+  <div class="container main-wrapper">
+    <header class="page-header-block">
+      <span class="page-badge">Инженерный аудит</span>
+      <h1 class="page-title">Преимущества и недостатки Serverless</h1>
+      <p class="page-lead">
+        Объективный взгляд на бессерверную модель: когда Serverless даёт десятикратную экономию и гибкость, а в каких сценариях может обернуться высокими расходами и сложностями в поддержке.
+      </p>
+    </header>
+
+    <div class="row">
+      <main class="column column-75">
+
+        <!-- 1. Преимущества -->
+        <section id="advantages" style="margin-bottom: 4rem;">
+          <h2>1. Ключевые преимущества</h2>
+          
+          <div class="card" style="border-left: 4px solid #10b981;">
+            <h4>Автоматическое эластичное масштабирование</h4>
+            <p>
+              Традиционный сервер требует настройки Auto Scaling Groups, прогрева новых виртуальных машин (что занимает 3–7 минут) и тонкой настройки метрик CPU. Бессерверная платформа масштабирует функции мгновенно: если в одну секунду поступило 10 000 запросов, провайдер параллельно запустит 10 000 экземпляров функции без участия администратора.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid #10b981;">
+            <h4>Оплата строго за фактические вызовы</h4>
+            <p>
+              Биллинг осуществляется с дискретностью до 1 миллисекунды. Если сервис простаивает ночью, в выходные или между рекламными кампаниями — компания не платит ни копейки за неиспользуемый процессор и оперативную память.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid #10b981;">
+            <h4>Полное отсутствие рутины администрирования серверов</h4>
+            <p>
+              Команда освобождается от необходимости обновлять пакеты в Ubuntu/CentOS, отслеживать уязвимости в OpenSSL, настраивать демоны systemd и следить за заполнением дискового пространства логами.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid #10b981;">
+            <h4>Встроенная отказоустойчивость (High Availability)</h4>
+            <p>
+              Облачные провайдеры по умолчанию распределяют выполнение функций между несколькими изолированными зонами доступности (Availability Zones) внутри одного географического региона. Сбой одного дата-центра не прерывает работу сервиса.
+            </p>
+          </div>
+        </section>
+
+        <!-- 2. Недостатки и ограничения -->
+        <section id="disadvantages" style="margin-bottom: 4rem;">
+          <h2>2. Недостатки и технические ограничения</h2>
+
+          <div class="card" style="border-left: 4px solid #ef4444;">
+            <h4>Холодный старт (Cold Start)</h4>
+            <p>
+              Если функция долго не вызывалась, облачная платформа уничтожает её контейнер. При поступлении нового запроса системе требуется время: выделить MicroVM, загрузить пакет кода и запустить среду (например, рантайм Java или Python). Это добавляет от 150 мс до 1–2 секунд к первому ответу.
+            </p>
+            <p><strong>Способы решения:</strong> использование легковесных сред (Node.js, Go, Rust), механизм <em>Provisioned Concurrency</em> (предварительно прогретые экземпляры) или периодический ping-триггер (warm-up plugin).
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid #ef4444;">
+            <h4>Лимиты времени выполнения (Execution Timeouts)</h4>
+            <p>
+              Бессерверная функция не предназначена для долгоиграющих процессов. Например, лимит AWS Lambda составляет 15 минут, а Cloudflare Workers — от 30 секунд. Задачи машинного обучения, рендеринг видео или сложная аналитика Big Data требуют использования контейнеров (ECS, Kubernetes) или фоновых воркеров.
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid #ef4444;">
+            <h4>Привязка к облачному вендору (Vendor Lock-in)</h4>
+            <p>
+              Каждый облачный провайдер использует собственный формат событий (Event schema), уникальную структуру контекста и фирменные библиотеки SDK. Перенести проект с AWS Lambda на Google Cloud Functions сложнее, чем просто переместить Docker-контейнер.
+            </p>
+            <p><strong>Способы решения:</strong> применение абстракций (Serverless Framework, AWS SAM, Terraform) и проектирование кода по принципам чистой архитектуры (Hexagonal Architecture / Ports &amp; Adapters).
+            </p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid #ef4444;">
+            <h4>Экономическая неэффективность при постоянной 100% нагрузке</h4>
+            <p>
+              Если ваш сервис генерирует непрерывный поток в 100 000 RPS 24 часа в сутки 365 дней в году, аренда выделенного сервера или кластера Kubernetes обойдётся существенно дешевле, чем поминутная оплата FaaS вызовов.
+            </p>
+          </div>
+        </section>
+
+        <!-- 3. Сводная таблица -->
+        <section id="summary-table" style="margin-bottom: 4rem;">
+          <h2>3. Сводное сравнение сильных и слабых сторон</h2>
+          
+          <div class="table-responsive">
+            <table>
+              <caption>Сводный анализ характеристик бессерверного подхода</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Критерий оценки</th>
+                  <th scope="col">Оценка в Serverless</th>
+                  <th scope="col">Техническое объяснение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Скорость масштабирования</th>
+                  <td><span class="table-tag tag-success">Отлично</span></td>
+                  <td>Мгновенное развёртывание сотен копий за доли секунды.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Стоимость при низком трафике</th>
+                  <td><span class="table-tag tag-success">Превосходно</span></td>
+                  <td>Плата равна нулю при отсутствии вызовов (Scale to Zero).</td>
+                </tr>
+                <tr>
+                  <th scope="row">Сложность сопровождения ОС</th>
+                  <td><span class="table-tag tag-success">Минимальная</span></td>
+                  <td>Патчинг и поддержание инфраструктуры делегированы вендору.</td>
+                </tr>
+                <tr>
+                  <th scope="row">Предсказуемость latency</th>
+                  <td><span class="table-tag tag-warning">Удовлетворительно</span></td>
+                  <td>Периодические всплески задержки из-за «холодного старта».</td>
+                </tr>
+                <tr>
+                  <th scope="row">Длительные вычисления</th>
+                  <td><span class="table-tag tag-warning">Ограничено</span></td>
+                  <td>Жёсткий лимит по таймауту (до 15 минут).</td>
+                </tr>
+                <tr>
+                  <th scope="row">Локальная разработка и тест</th>
+                  <td><span class="table-tag tag-warning">Требует эмуляторов</span></td>
+                  <td>Необходимы локальные эмуляторы шлюзов и баз данных (LocalStack).</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 4. Интерактивный FAQ (Аккордеон) -->
+        <section id="faq" style="margin-bottom: 4rem;">
+          <h2>4. Часто задаваемые вопросы (FAQ)</h2>
+          <p>Нажмите на вопрос, чтобы открыть развёрнутый технический ответ:</p>
+
+          <div class="accordion-group">
+            <div class="accordion-item">
+              <button class="accordion-header" type="button">
+                <span>Как на практике победить «холодный старт» в продакшене?</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-body">
+                Для борьбы с холодным стартом применяются три метода: 1) Включение опции <em>Provisioned Concurrency</em> на критических маршрутах, которая держит заданное число экземпляров постоянно тёплыми; 2) Переход на легковесные языки (Node.js, Go или Rust инициализируются за 10–25 мс, в то время как JVM требует от 500 мс); 3) Оптимизация размера бандла (Tree-shaking, удаление неиспользуемых npm-пакетов).
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header" type="button">
+                <span>Правда ли, что Serverless всегда дешевле традиционных серверов?</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-body">
+                Нет, не всегда. Serverless значительно выгоднее при волнообразном, непредсказуемом или невысоком трафике (стартапы, внутренние корпоративные порталы, фоновые обработчики, cron-задачи). Но если нагрузка равномерная, высокая и предсказуемая 24/7, расходы на FaaS могут превысить стоимость аренды выделенных виртуальных серверов.
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header" type="button">
+                <span>Как защитить проект от вендор-лока (Vendor Lock-in)?</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-body">
+                Разделяйте бизнес-логику и код адаптера облака. Вся чистая логика приложения должна находиться в стандартных JavaScript/Python модулях, не зависящих от SDK конкретного провайдера. Входной обработчик (Handler) должен лишь извлекать параметры из события и передавать их чистой функции. Для описания инфраструктуры используйте открытые инструменты, такие как Terraform или Serverless Framework.
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-header" type="button">
+                <span>Что такое «Denial of Wallet» (Отказ кошелька)?</span>
+                <span class="accordion-icon">▼</span>
+              </button>
+              <div class="accordion-body">
+                В отличие от традиционного DDoS, когда сервер «падает» от перегрузки, Serverless-система послушно смасштабируется до сотен тысяч функций. В результате сервис останется доступным, но владельцу придёт астрономический счёт от облака. Для предотвращения этого на уровне API Gateway настраивают лимиты (Throttling / WAF) и устанавливают бюджетные алерты (Budget Alerts) с лимитом отсечки.
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Сайдбар -->
+      <aside class="column column-25 site-aside">
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            В этом разделе
+          </h3>
+          <ul class="toc-list">
+            <li><a href="#advantages">1. Достоинства</a></li>
+            <li><a href="#disadvantages">2. Недостатки и риски</a></li>
+            <li><a href="#summary-table">3. Сводная таблица</a></li>
+            <li><a href="#faq">4. Частые вопросы FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Инженерная мудрость
+          </h3>
+          <div class="fact-box">
+            «Лучший код — это тот, который не нужно писать. Лучший сервер — тот, которым не нужно управлять.» Архитекторы советуют начинать проект с Serverless для валидации гипотезы, а оптимизировать при необходимости позже.
+          </div>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            Подписка
+          </h3>
+          <form class="subscribe-form" novalidate>
+            <input type="email" placeholder="Ваш email" required aria-label="Email">
+            <button type="submit" class="button" style="width: 100%;">Подписаться</button>
+            <div class="subscribe-feedback" role="alert"></div>
+          </form>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            Следующий шаг
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Посмотрите 7 реальных сценариев применения бессерверных технологий.</p>
+          <a href="use-cases.html" class="button button-outline" style="width: 100%;">Примеры использования →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Кнопка возврата наверх -->
+  <button id="back-to-top" class="back-to-top" type="button" title="Вернуться к началу страницы" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- Подвал сайта -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="column column-40">
+          <h4 class="footer-col-title">Serverless</h4>
+          <p>Учебный проект по дисциплине «Использование CSS-фреймворков». Разработан с использованием Milligram CSS.</p>
+          <p style="font-size: 1.3rem;">
+            <strong>Студент:</strong> Ананьин Ефим Вадимович<br>
+            <strong>Тема № 34:</strong> Бессерверная архитектура (Serverless)<br>
+            <span class="footer-framework-tag">
+              <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+              <strong>CSS-фреймворк:</strong> <a href="https://milligram.io" target="_blank" rel="noopener">Milligram.io</a> (v1.4.1)
+            </span>
+          </p>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Навигация</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О Serverless</a></li>
+            <li><a href="architecture.html">Архитектура</a></li>
+            <li><a href="platforms.html">Платформы</a></li>
+            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
+          </ul>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Материалы</h4>
+          <ul class="footer-links">
+            <li><a href="use-cases.html">Примеры использования</a></li>
+            <li><a href="tutorial.html">Практика написания кода</a></li>
+            <li><a href="security.html">Безопасность систем</a></li>
+            <li><a href="comparison.html">Сравнение архитектур</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Serverless. Все права защищены.</div>
+        <div>Студент: Ананьин Е. В. | CSS-фреймворк Milligram</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Облачные платформы Serverless — возможности, сравнение и выбор | Serverless</title>
+  <meta name="description" content="Сравнительный обзор ведущих бессерверных платформ: AWS Lambda, Azure Functions, Google Cloud Functions, Cloudflare Workers и Yandex Cloud Functions. Сравнительная таблица и ссылки.">
+  <meta name="author" content="Ананьин Ефим Вадимович">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Favicon: официальная иконка Milligram CSS -->
+  <link rel="icon" type="image/svg+xml" href="images/milligram-logo.svg">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Шапка сайта -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="brand-wrapper" aria-label="Serverless Главная">
+          <img src="images/logo.svg" alt="Логотип Serverless" class="brand-logo" width="38" height="38">
+          <span class="brand-name">Serverless</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Основная навигация">
+          <ul>
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="about.html" class="nav-link">О Serverless</a></li>
+            <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
+            <li><a href="platforms.html" class="nav-link active">Платформы</a></li>
+            <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
+            <li><a href="use-cases.html" class="nav-link">Примеры</a></li>
+            <li><a href="tutorial.html" class="nav-link">Практика</a></li>
+            <li><a href="security.html" class="nav-link">Безопасность</a></li>
+            <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
+            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
+          </ul>
+        </nav>
+
+                <div class="header-actions">
+          <a href="https://milligram.io" target="_blank" rel="noopener" class="milligram-badge" title="CSS-фреймворк: Milligram (milligram.io)">
+            <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+            <span>Milligram</span>
+          </a>
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="Переключить тему оформления" aria-label="Переключить тему">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="burger-btn" class="burger-btn" type="button" title="Открыть мобильное меню" aria-label="Открыть мобильное меню">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Мобильное меню -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Мобильное меню">
+    <div class="mobile-nav-header">
+      <span class="brand-name">Serverless</span>
+      <button id="mobile-nav-close" class="button-clear" type="button" aria-label="Закрыть меню" style="font-size: 2.4rem; padding: 0;">✕</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
+      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
+      <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
+      <li><a href="platforms.html" class="mobile-nav-link active">Облачные платформы</a></li>
+      <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
+      <li><a href="use-cases.html" class="mobile-nav-link">Примеры использования</a></li>
+      <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
+      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
+      <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
+      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
+    </ul>
+  </aside>
+
+  <!-- Контент страницы -->
+  <div class="container main-wrapper">
+    <header class="page-header-block">
+      <span class="page-badge">Обзор рынка и экосистем</span>
+      <h1 class="page-title">Облачные платформы Serverless</h1>
+      <p class="page-lead">
+        Детальный разбор ключевых игроков облачного рынка: особенности среды исполнения, лимиты, поддерживаемые языки программирования и сценарии применения.
+      </p>
+    </header>
+
+    <div class="row">
+      <main class="column column-75">
+
+        <!-- Введение -->
+        <section id="overview" style="margin-bottom: 3.5rem;">
+          <h2>Ведущие бессерверные экосистемы</h2>
+          <p>
+            Сегодня практически каждый крупный облачный провайдер предлагает собственные решения в классе FaaS. Выбор конкретной платформы обычно определяется существующим стеком компании, требованиями к задержке (Latency), географией пользователей и законодательными нормами (например, 152-ФЗ в РФ).
+          </p>
+        </section>
+
+        <!-- Интерактивные вкладки платформ -->
+        <section id="interactive-tabs" style="margin-bottom: 4rem;">
+          <h2>Интерактивный каталог платформ</h2>
+          <p>Переключайтесь между вкладками, чтобы изучить специфику и технический стек каждой платформы:</p>
+
+          <div class="tab-container">
+            <!-- Кнопки вкладок -->
+            <div class="tab-nav" role="tablist">
+              <button class="tab-btn active" data-target="tab-aws" role="tab">AWS Lambda</button>
+              <button class="tab-btn" data-target="tab-azure" role="tab">Azure Functions</button>
+              <button class="tab-btn" data-target="tab-gcp" role="tab">Google Cloud</button>
+              <button class="tab-btn" data-target="tab-cloudflare" role="tab">Cloudflare Workers</button>
+              <button class="tab-btn" data-target="tab-yandex" role="tab">Yandex Cloud</button>
+            </div>
+
+            <!-- Вкладка 1: AWS Lambda -->
+            <div id="tab-aws" class="tab-pane active" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #ff9900;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Amazon Web Services: AWS Lambda</h3>
+                  <span class="table-tag tag-info">Пионер индустрии с 2014 г.</span>
+                </div>
+                <p>
+                  <strong>AWS Lambda</strong> — эталонная и наиболее зрелая бессерверная платформа в мире. Предлагает максимальную интеграцию с более чем 200 сервисами AWS (S3, DynamoDB, SQS, SNS, EventBridge, Kinesis).
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Среда изоляции:</strong> Технология MicroVM Firecracker.</li>
+                  <li><strong>Максимальное время выполнения:</strong> 15 минут на один вызов.</li>
+                  <li><strong>Выделяемая память:</strong> От 128 МБ до 10 240 МБ (10 ГБ), с пропорциональным выделением vCPU.</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> Node.js, Python, Java, Go, .NET, Ruby, а также поддержка Custom Runtime и OCI-контейнеров (Docker).</li>
+                  <li><strong>Оптимизация:</strong> Provisioned Concurrency для гарантированного отсутствия холодного старта.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://docs.aws.amazon.com/lambda/" target="_blank" rel="noopener">docs.aws.amazon.com/lambda ↗</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Вкладка 2: Azure Functions -->
+            <div id="tab-azure" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #0078d4;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Microsoft Azure Functions</h3>
+                  <span class="table-tag tag-success">Корпоративный стандарт</span>
+                </div>
+                <p>
+                  <strong>Azure Functions</strong> — мощное решение от Microsoft, ориентированное на бесшовную интеграцию с Active Directory, Office 365, Cosmos DB и средой .NET.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Durable Functions:</strong> Встроенный фреймворк для написания stateful-воркфлоу, оркестрации функций и ожидания внешних событий с сохранением прогресса.</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> C# (.NET), JavaScript/TypeScript, Python, Java, PowerShell.</li>
+                  <li><strong>Гибкость хостинга:</strong> Возможность запуска как в режиме Consumption (чистый serverless), так и на выделенных App Service планах или локально в Kubernetes через KEDA.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-functions/" target="_blank" rel="noopener">learn.microsoft.com/azure/azure-functions ↗</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Вкладка 3: Google Cloud Functions -->
+            <div id="tab-gcp" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #4285f4;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Google Cloud Functions (2nd Gen)</h3>
+                  <span class="table-tag tag-warning">Синергия с Cloud Run</span>
+                </div>
+                <p>
+                  <strong>Google Cloud Functions</strong> — сервис вычислений от Google. Во втором поколении построен поверх Cloud Run и Knative, что превращает каждую функцию в стандартный совместимый OCI-контейнер.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Параллелизм (Concurrency):</strong> До 1000 параллельных запросов на один экземпляр функции (в отличие от модели 1 запрос = 1 экземпляр в традиционном FaaS).</li>
+                  <li><strong>Максимальное время выполнения:</strong> До 60 минут для HTTP-триггеров.</li>
+                  <li><strong>Интеграция:</strong> Прямая связь с BigQuery, Cloud Pub/Sub, Firebase и AI-моделями Google Vertex AI.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://cloud.google.com/functions/docs" target="_blank" rel="noopener">cloud.google.com/functions/docs ↗</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Вкладка 4: Cloudflare Workers -->
+            <div id="tab-cloudflare" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #f6821f;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Cloudflare Workers</h3>
+                  <span class="table-tag tag-info">Периферийные вычисления (Edge)</span>
+                </div>
+                <p>
+                  <strong>Cloudflare Workers</strong> — революционная пограничная FaaS-платформа. Код выполняется не в централизованных дата-центрах, а более чем в 300 городах по всему миру в непосредственной близости к пользователю.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Нулевой холодный старт:</strong> Используются V8 Isolates, время инициализации составляет менее 5 миллисекунд.</li>
+                  <li><strong>Низкая задержка:</strong> Запрос обрабатывается ближайшим узлом CDN сети.</li>
+                  <li><strong>Встроенные хранилища:</strong> Workers KV (key-value), D1 (serverless SQL SQLite), R2 (S3-совместимое объектное хранилище без платы за исходящий трафик).</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> JavaScript, TypeScript, WebAssembly (Rust, C++, Go).</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener">developers.cloudflare.com/workers ↗</a>
+                </p>
+              </div>
+            </div>
+
+            <!-- Вкладка 5: Yandex Cloud Functions -->
+            <div id="tab-yandex" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #fc3f1d;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Yandex Cloud Functions</h3>
+                  <span class="table-tag tag-success">Российская инфраструктура</span>
+                </div>
+                <p>
+                  <strong>Yandex Cloud Functions</strong> — отечественная масштабируемая бессерверная платформа, серверы которой расположены в российских дата-центрах с полным соответствием закону 152-ФЗ.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Бесплатный грант:</strong> 1 000 000 вызовов каждый месяц в рамках Free Tier.</li>
+                  <li><strong>Интеграция с YDB:</strong> Высокопроизводительная распределённая бессерверная СУБД с поддержкой строгих ACID-транзакций.</li>
+                  <li><strong>Экосистема триггеров:</strong> Триггеры таймера (cron), очереди Message Queue, события Object Storage, шина данных Data Streams.</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> Node.js, Python, Go, Java, PHP, Bash.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://yandex.cloud/ru/docs/functions/" target="_blank" rel="noopener">yandex.cloud/ru/docs/functions ↗</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Сравнительная семантическая таблица платформ -->
+        <section id="comparison-table" style="margin-bottom: 4rem;">
+          <h2>Сравнительная таблица платформ</h2>
+          <p>
+            Семантическое сравнение ключевых технических характеристик бессерверных сред выполнения:
+          </p>
+
+          <div class="table-responsive">
+            <table>
+              <caption>Сравнительные параметры ведущих облачных FaaS-провайдеров</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Платформа</th>
+                  <th scope="col">Тип среды / Изоляция</th>
+                  <th scope="col">Макс. таймаут</th>
+                  <th scope="col">Объём памяти (RAM)</th>
+                  <th scope="col">Поддержка языков</th>
+                  <th scope="col">Документация</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">AWS Lambda</th>
+                  <td>MicroVM Firecracker</td>
+                  <td>15 минут</td>
+                  <td>128 МБ – 10 ГБ</td>
+                  <td>Node.js, Python, Java, Go, .NET, Docker</td>
+                  <td><a href="https://docs.aws.amazon.com/lambda/" target="_blank" rel="noopener">AWS Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Azure Functions</th>
+                  <td>App Service Sandbox / Docker</td>
+                  <td>10 мин (до 60 мин)</td>
+                  <td>До 14 ГБ (Flex Plan)</td>
+                  <td>C#, JS/TS, Python, Java, PowerShell</td>
+                  <td><a href="https://learn.microsoft.com/en-us/azure/azure-functions/" target="_blank" rel="noopener">Azure Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Google Cloud Functions</th>
+                  <td>gVisor / Cloud Run (OCI)</td>
+                  <td>60 минут</td>
+                  <td>128 МБ – 32 ГБ</td>
+                  <td>Node.js, Python, Go, Java, .NET, Ruby</td>
+                  <td><a href="https://cloud.google.com/functions/docs" target="_blank" rel="noopener">GCP Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Cloudflare Workers</th>
+                  <td>V8 Isolates (Edge)</td>
+                  <td>30 сек (CPU time)</td>
+                  <td>128 МБ – 512 МБ</td>
+                  <td>JS, TS, WebAssembly (Rust, C++)</td>
+                  <td><a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener">Cloudflare Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Yandex Cloud Functions</th>
+                  <td>MicroVM / Linux Cgroups</td>
+                  <td>10 минут</td>
+                  <td>128 МБ – 4 ГБ</td>
+                  <td>Node.js, Python, Go, Java, PHP, Bash</td>
+                  <td><a href="https://yandex.cloud/ru/docs/functions/" target="_blank" rel="noopener">Yandex Docs ↗</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Сайдбар -->
+      <aside class="column column-25 site-aside">
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            В этом разделе
+          </h3>
+          <ul class="toc-list">
+            <li><a href="#overview">Обзор платформ</a></li>
+            <li><a href="#interactive-tabs">Интерактивный каталог</a></li>
+            <li><a href="#comparison-table">Сравнительная таблица</a></li>
+          </ul>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Статистика рынка
+          </h3>
+          <div class="fact-box">
+            По данным отчёта Datadog «State of Serverless», более <strong>70% организаций</strong>, использующих AWS, применяют Lambda в продакшене. При этом на Node.js и Python приходится свыше 80% всех развёрнутых функций.
+          </div>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            Подписка
+          </h3>
+          <form class="subscribe-form" novalidate>
+            <input type="email" placeholder="Email для новостей" required aria-label="Email">
+            <button type="submit" class="button" style="width: 100%;">Подписаться</button>
+            <div class="subscribe-feedback" role="alert"></div>
+          </form>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            Следующий раздел
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Изучите сильные стороны и скрытые подводные камни бессерверной технологии.</p>
+          <a href="pros-cons.html" class="button button-outline" style="width: 100%;">Плюсы и минусы →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Кнопка возврата наверх -->
+  <button id="back-to-top" class="back-to-top" type="button" title="Вернуться к началу страницы" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- Подвал сайта -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="column column-40">
+          <h4 class="footer-col-title">Serverless</h4>
+          <p>Учебный проект по дисциплине «Использование CSS-фреймворков». Разработан с использованием Milligram CSS.</p>
+          <p style="font-size: 1.3rem;">
+            <strong>Студент:</strong> Ананьин Ефим Вадимович<br>
+            <strong>Тема № 34:</strong> Бессерверная архитектура (Serverless)<br>
+            <span class="footer-framework-tag">
+              <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+              <strong>CSS-фреймворк:</strong> <a href="https://milligram.io" target="_blank" rel="noopener">Milligram.io</a> (v1.4.1)
+            </span>
+          </p>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Навигация</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О Serverless</a></li>
+            <li><a href="architecture.html">Архитектура</a></li>
+            <li><a href="platforms.html">Платформы</a></li>
+            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
+          </ul>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Связанные разделы</h4>
+          <ul class="footer-links">
+            <li><a href="tutorial.html">Практика</a></li>
+            <li><a href="security.html">Безопасность</a></li>
+            <li><a href="comparison.html">Сравнение архитектур</a></li>
+            <li><a href="glossary.html">Словарь терминов</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Serverless. Все права защищены.</div>
+        <div>Студент: Ананьин Е. В. | CSS-фреймворк Milligram</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 340" width="100%" height="auto" fill="none">
+  <defs>
+    <linearGradient id="cold-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="warm-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="740" height="340" rx="14" fill="#0d1527"/>
+
+  <text x="370" y="32" fill="#f8fafc" font-family="'Inter', system-ui, sans-serif" font-size="14" font-weight="700" text-anchor="middle">
+    Жизненный цикл вызова функции: Холодный старт (Cold Start) против Тёплого (Warm Start)
+  </text>
+
+  <!-- Cold Start Track -->
+  <g transform="translate(30, 60)">
+    <text x="0" y="20" fill="#f87171" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="700">1. Первый вызов (Cold Start ~ 150-800 мс)</text>
+    
+    <!-- Stage 1: Download code -->
+    <rect x="0" y="35" width="160" height="55" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+    <text x="80" y="60" fill="#fca5a5" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">1. Загрузка кода</text>
+    <text x="80" y="76" fill="#94a3b8" font-family="'Inter', system-ui, sans-serif" font-size="9" text-anchor="middle">Выделение MicroVM</text>
+
+    <!-- Arrow -->
+    <path d="M165 62 L185 62" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- Stage 2: Init Runtime -->
+    <rect x="190" y="35" width="160" height="55" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="270" y="60" fill="#fcd34d" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">2. Старт среды (Init)</text>
+    <text x="270" y="76" fill="#94a3b8" font-family="'Inter', system-ui, sans-serif" font-size="9" text-anchor="middle">Импорт библиотек / БД</text>
+
+    <!-- Arrow -->
+    <path d="M355 62 L375 62" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Stage 3: Handler Execution -->
+    <rect x="380" y="35" width="180" height="55" rx="8" fill="#1e293b" stroke="#10b981" stroke-width="1.5"/>
+    <text x="470" y="60" fill="#6ee7b7" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">3. Выполнение Handler</text>
+    <text x="470" y="76" fill="#94a3b8" font-family="'Inter', system-ui, sans-serif" font-size="9" text-anchor="middle">Бизнес-логика функции</text>
+
+    <!-- Arrow -->
+    <path d="M565 62 L585 62" stroke="#64748b" stroke-width="2"/>
+
+    <!-- Stage 4: Response & Freeze -->
+    <rect x="590" y="35" width="90" height="55" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="635" y="60" fill="#7dd3fc" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">4. Ответ</text>
+    <text x="635" y="76" fill="#94a3b8" font-family="'Inter', system-ui, sans-serif" font-size="9" text-anchor="middle">Заморозка</text>
+  </g>
+
+  <!-- Divider -->
+  <line x1="30" y1="185" x2="710" y2="185" stroke="#1e293b" stroke-width="2"/>
+
+  <!-- Warm Start Track -->
+  <g transform="translate(30, 205)">
+    <text x="0" y="20" fill="#34d399" font-family="'Inter', system-ui, sans-serif" font-size="13" font-weight="700">2. Повторный вызов (Warm Start ~ 5-25 мс)</text>
+    
+    <!-- Stage skipped badge -->
+    <g transform="translate(0, 35)">
+      <rect width="350" height="55" rx="8" fill="#111c33" stroke="#334155" stroke-dasharray="4 4"/>
+      <text x="175" y="32" fill="#64748b" font-family="'Inter', system-ui, sans-serif" font-size="11" font-style="italic" text-anchor="middle">
+        Пропуск этапов загрузки и инициализации (контейнер уже активен)
+      </text>
+    </g>
+
+    <!-- Arrow -->
+    <path d="M355 62 L375 62" stroke="#34d399" stroke-width="2"/>
+
+    <!-- Stage 3: Handler Execution Instant -->
+    <rect x="380" y="35" width="180" height="55" rx="8" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+    <text x="470" y="60" fill="#a7f3d0" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="700" text-anchor="middle">Мгновенный Handler</text>
+    <text x="470" y="76" fill="#34d399" font-family="'Inter', system-ui, sans-serif" font-size="9" text-anchor="middle">Пул БД уже открыт</text>
+
+    <!-- Arrow -->
+    <path d="M565 62 L585 62" stroke="#34d399" stroke-width="2"/>
+
+    <!-- Stage 4: Response -->
+    <rect x="590" y="35" width="90" height="55" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+    <text x="635" y="60" fill="#7dd3fc" font-family="'Inter', system-ui, sans-serif" font-size="11" font-weight="600" text-anchor="middle">Ответ</text>
+    <text x="635" y="76" fill="#94a3b8" font-family="'Inter', system-ui, sans-serif" font-size="9" text-anchor="middle">&lt; 15 мс</text>
+  </g>
+</svg>
