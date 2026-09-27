@@ -99,6 +99,11 @@ function initMobileMenu() {
       closeMenu();
     }
   });
+
+  // Автоматическое закрытие меню при переходе по ссылке
+  drawer.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
 }
 
 /* ==========================================================================
@@ -181,11 +186,11 @@ function initSubscribeForms() {
 
       if (!emailRegex.test(emailVal)) {
         feedback.className = 'subscribe-feedback error';
-        feedback.textContent = 'Пожалуйста, введите корректный email адрес.';
+        feedback.textContent = 'Пожалуйста, укажите корректный email адрес.';
         emailInput.focus();
       } else {
         feedback.className = 'subscribe-feedback success';
-        feedback.textContent = '✓ Спасибо за подписку! Дайджест отправлен.';
+        feedback.textContent = '✓ Спасибо! Сообщение отправлено.';
         emailInput.value = '';
         setTimeout(() => {
           feedback.style.display = 'none';
