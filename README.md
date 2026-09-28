@@ -1,201 +1,379 @@
-# Serverless — Образовательный веб-проект
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Облачные платформы Serverless — возможности, сравнение и выбор | Serverless</title>
+  <meta name="description" content="Сравнительный обзор ведущих бессерверных платформ: AWS Lambda, Azure Functions, Google Cloud Functions, Cloudflare Workers и Yandex Cloud Functions. Сравнительная таблица и ссылки.">
+  <meta name="author" content="Ананьин Ефим Вадимович">
 
-## Сведения о проекте
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-* **Название проекта:** Serverless
-* **Студент:** Ананьин Ефим Вадимович (группа 835)
-* **Тема:** № 34 — Бессерверная архитектура (Serverless)
-* **CSS-фреймворк:** Milligram (№ 7)
-* **Ссылка на GitHub Pages:** https://kdfley-muzhik.github.io/serverless-hub/
-* **Ссылка на репозиторий GitHub:** https://github.com/kdfley-muzhik/serverless-hub
+  <!-- Favicon: официальная иконка Milligram CSS -->
+  <link rel="icon" type="image/svg+xml" href="images/milligram-logo.svg">
 
----
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-## 1. Описание проекта
+  <!-- Шапка сайта -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="brand-wrapper" aria-label="Serverless Главная">
+          <img src="images/logo.svg" alt="Логотип Serverless" class="brand-logo" width="38" height="38">
+          <span class="brand-name">Serverless</span>
+        </a>
 
-**Serverless Hub** — это современный многостраничный образовательный веб-портал, посвящённый изучению бессерверной архитектуры (Serverless computing), принципов Function as a Service (FaaS) и Backend as a Service (BaaS), ведущих облачных платформ, вопросам безопасности и практической разработке облачных функций.
+        <nav class="site-nav" aria-label="Основная навигация">
+          <ul>
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="about.html" class="nav-link">О Serverless</a></li>
+            <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
+            <li><a href="platforms.html" class="nav-link active">Платформы</a></li>
+            <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
+            <li><a href="use-cases.html" class="nav-link">Примеры</a></li>
+            <li><a href="tutorial.html" class="nav-link">Практика</a></li>
+            <li><a href="security.html" class="nav-link">Безопасность</a></li>
+            <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
+            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
+          </ul>
+        </nav>
 
-Проект разработан в рамках учебной дисциплины «Использование CSS-фреймворков». В качестве основного стилевого фундамента используется минималистичный CSS-фреймворк **Milligram** (v1.4.1, [milligram.io](https://milligram.io/)). Дизайн портала аутентично следует фирменному стилю Milligram:
-* Фирменный пурпурный акцент Milligram Purple (`#9b4dca`), тёмный ховер (`#606c76`);
-* Каноническая типографика **Roboto** (веса 300, 400, 700) и JetBrains Mono для кода;
-* Светлый вторичный фон `#f4f5f6` для карточек, таблиц и блоков кода;
-* Официальная иконка фреймворка Milligram (лабораторная мерная колба / beaker) в шапке, hero-секции и подвале;
-* Поддержка переключения светлой и тёмной тем оформления с сохранением состояния.
+                <div class="header-actions">
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="Переключить тему оформления" aria-label="Переключить тему">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="burger-btn" class="burger-btn" type="button" title="Открыть мобильное меню" aria-label="Открыть мобильное меню">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
----
+  <!-- Мобильное меню -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Мобильное меню">
+    <div class="mobile-nav-header">
+      <span class="brand-name">Serverless</span>
+      <button id="mobile-nav-close" class="button-clear" type="button" aria-label="Закрыть меню" style="font-size: 2.4rem; padding: 0;">✕</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
+      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
+      <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
+      <li><a href="platforms.html" class="mobile-nav-link active">Облачные платформы</a></li>
+      <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
+      <li><a href="use-cases.html" class="mobile-nav-link">Примеры использования</a></li>
+      <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
+      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
+      <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
+      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
+    </ul>
+  </aside>
 
-## 2. Структура страниц сайта (10 связанных страниц)
+  <!-- Контент страницы -->
+  <div class="container main-wrapper">
+    <header class="page-header-block">
+      <h1 class="page-title">Облачные платформы Serverless</h1>
+      <p class="page-lead">
+        Детальный разбор ключевых игроков облачного рынка: особенности среды исполнения, лимиты, поддерживаемые языки программирования и сценарии применения.
+      </p>
+    </header>
 
-1. **`index.html` — Главная страница («Serverless Hub — разработка без серверов»):**
-   * Большой презентационный hero-блок со статистикой и кнопками призыва к действию.
-   * Концептуальное введение в технологию бессерверных вычислений.
-   * Информационные карточки ключевых преимуществ.
-   * Интерактивная карта направлений обучения на портале.
-   * Схема 4-этапного цикла работы Serverless-приложения.
-   * Архитектурная схема взаимодействия компонентов.
-2. **`about.html` — Что такое Serverless:**
-   * Определение бессерверных вычислений и фундаментальные принципы (Stateless, Event-driven, Ephemeral, Scale-to-Zero).
-   * Историческая эволюция от физических серверов On-Premise к IaaS, PaaS и FaaS.
-   * Инфографика сопоставления традиционных серверов и FaaS.
-   * Математика и принципы модели оплаты Pay-as-you-go с посекундной тарификацией.
-3. **`architecture.html` — Архитектура Serverless:**
-   * Детальное устройство компонентов FaaS (MicroVM Firecracker, V8 Isolates) и BaaS.
-   * Роль, функции и возможности API Gateway (маршрутизация, троттлинг, валидация JSON Schema).
-   * Особенности баз данных в бессерверной среде (DynamoDB, YDB, Neon Postgres).
-   * Событийно-ориентированная архитектура (Event-Driven Architecture) и шины сообщений.
-   * Подробная схема жизненного цикла HTTP-запроса с разбором холодного и тёплого старта.
-4. **`platforms.html` — Облачные платформы:**
-   * Интерактивный каталог платформ с вкладками: AWS Lambda, Microsoft Azure Functions, Google Cloud Functions, Cloudflare Workers, Yandex Cloud Functions.
-   * Технические параметры, лимиты памяти, таймауты и поддерживаемые рантаймы.
-   * Семантическая таблица сравнения платформ со ссылками на официальную документацию.
-5. **`pros-cons.html` — Преимущества и недостатки:**
-   * Анализ достоинств: мгновенная эластичность, нулевая стоимость простоя, отсутствие рутины администрирования ОС.
-   * Анализ ограничений: физика холодного старта, таймауты выполнения, вендор-лок, риски «Denial of Wallet».
-   * Сводная оценочная таблица характеристик.
-   * Интерактивный аккордеон с ответами на частые вопросы (FAQ).
-6. **`use-cases.html` — Примеры использования:**
-   * Разбор 7 реальных индустриальных сценариев:
-     1. Асинхронная обработка медиа и генерация превью изображений.
-     2. Чат-боты и обработка входящих Webhook-событий.
-     3. Бессерверные REST API и CRUD-микросервисы.
-     4. Потоковая обработка данных, кликстрима и логов (ETL).
-     5. Периодические задачи и автоматизация по расписанию (Cron).
-     6. Интернет вещей (IoT) и телеметрия умных сенсоров.
-     7. Массовая отправка транзакционных email и push-уведомлений.
-7. **`tutorial.html` — Практика (Практический урок):**
-   * Разработка микросервиса на JavaScript (Node.js) без обязательной регистрации в облаке.
-   * Пошаговый разбор структуры функции-хендлера (`handler.js`).
-   * Анализ объектов входного события (`event.json`) и выходного HTTP-ответа (`response.json`).
-   * Кнопки копирования исходного кода в буфер обмена.
-   * Встроенный интерактивный симулятор выполнения бессерверной функции в браузере.
-8. **`security.html` — Безопасность бессерверных систем:**
-   * Модель разделения ответственности (Shared Responsibility Model).
-   * Управление доступом и принцип наименьших привилегий в политиках IAM.
-   * Защита периметра API Gateway (WAF, Rate Limiting, CORS, JWT-авторизация).
-   * Безопасное хранение секретов (AWS Secrets Manager, Yandex Lockbox).
-   * Предотвращение «Denial of Wallet» и распределённый трейсинг (OpenTelemetry/X-Ray).
-   * Практический чек-лист безопасности разработчика.
-9. **`comparison.html` — Сравнение архитектур:**
-   * Глубокое сопоставление Монолита, Контейнерных микросервисов (Docker/Kubernetes) и Serverless.
-   * Полная семантическая HTML-таблица (`<table>`, `<caption>`, `<thead>`, `<tbody>`, `<th scope="col">`, `<th scope="row">`).
-   * Инженерные рекомендации: критерии выбора архитектуры для различных типов бизнеса.
-10. **`glossary.html` — Словарь терминов и ресурсы:**
-    * Интерактивный глоссарий из 14 ключевых терминов (FaaS, BaaS, API Gateway, Cold Start, Concurrency, MicroVM и др.).
-    * Живой поиск и фильтрация терминов в реальном времени с индикатором количества результатов.
-    * Каталог ссылок на официальные спецификации (CNCF CloudEvents, Serverless Framework, Firecracker).
-    * Встроенный адаптивный видеоплеер с лекцией по основам Serverless (Антон Черепанов. Serverless Architecture and AWS: https://yandex.ru/video/preview/267301312799122543).
+    <div class="row">
+      <main class="column column-75">
 
----
+        <!-- Введение -->
+        <section id="overview" style="margin-bottom: 3.5rem;">
+          <h2>Ведущие бессерверные экосистемы</h2>
+          <p>
+            Сегодня практически каждый крупный облачный провайдер предлагает собственные решения в классе FaaS. Выбор конкретной платформы обычно определяется существующим стеком компании, требованиями к задержке (Latency), географией пользователей и законодательными нормами (например, 152-ФЗ в РФ).
+          </p>
+        </section>
 
-## 3. Используемые технологии
+        <!-- Интерактивные вкладки платформ -->
+        <section id="interactive-tabs" style="margin-bottom: 4rem;">
+          <h2>Интерактивный каталог платформ</h2>
+          <p>Переключайтесь между вкладками, чтобы изучить специфику и технический стек каждой платформы:</p>
 
-* **HTML5:** строгая семантическая разметка (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`, `<table>`, `<caption>`, `<thead>`, `<tbody>`, `<th scope="...">`, `<figure>`, `<figcaption>`).
-* **CSS3:** адаптивная вёрстка (Mobile First), поддержка CSS Custom Properties для динамического переключения тем, плавные переходы и тени.
-* **Milligram CSS (v1.4.1):** официальный CSS-фреймворк № 7 ([milligram.io](https://milligram.io/)), сетка `.container`, `.row`, `.column`, кнопки `.button`, `.button-outline`, `.button-clear`, формы, типографика, официальная иконка (мерная колба).
-* **Normalize.css (v8.0.1):** сброс и нормализация браузерных стилей.
-* **Google Fonts:** фирменный шрифт Milligram — **Roboto** (веса 300, 400, 700) и JetBrains Mono (код и формулы).
-* **Графика и оптимизация для Web (WebP, PNG, JPEG, SVG):** все иллюстрации и схемы оптимизированы для web со сжатием без потери качества; используются современные форматы WebP (сжатие 45–67 КБ) с фоллбэком на PNG через тег `<picture>`, растровые версии JPEG, а также векторные SVG для иконок и логотипов.
-* **Vanilla JavaScript (без сторонних библиотек):**
-  * Переключатель светлой и тёмной темы с сохранением состояния в `localStorage`.
-  * Мобильное бургер-меню с плавным выдвижным drawer-эффектом и оверлеем.
-  * Автоматическая подсветка активного пункта навигации.
-  * Плавная кнопка возврата наверх («Back to Top») с отслеживанием позиции скролла.
-  * Аккордеоны для блоков FAQ.
-  * Форма подписки на дайджест с клиентской регулярной валидацией email и сообщениями обратной связи.
-  * Живой поиск по словарю терминов.
-  * Интерактивные вкладки на странице платформ.
-  * Кнопки копирования фрагментов кода с уведомлением в буфер обмена.
-  * Браузерный эмулятор выполнения бессерверной функции.
+          <div class="tab-container">
+            <!-- Кнопки вкладок -->
+            <div class="tab-nav" role="tablist">
+              <button class="tab-btn active" data-target="tab-aws" role="tab">AWS Lambda</button>
+              <button class="tab-btn" data-target="tab-azure" role="tab">Azure Functions</button>
+              <button class="tab-btn" data-target="tab-gcp" role="tab">Google Cloud</button>
+              <button class="tab-btn" data-target="tab-cloudflare" role="tab">Cloudflare Workers</button>
+              <button class="tab-btn" data-target="tab-yandex" role="tab">Yandex Cloud</button>
+            </div>
 
----
+            <!-- Вкладка 1: AWS Lambda -->
+            <div id="tab-aws" class="tab-pane active" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #ff9900;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Amazon Web Services: AWS Lambda</h3>
+                  <span class="table-tag tag-info">Пионер индустрии с 2014 г.</span>
+                </div>
+                <p>
+                  <strong>AWS Lambda</strong> — эталонная и наиболее зрелая бессерверная платформа в мире. Предлагает максимальную интеграцию с более чем 200 сервисами AWS (S3, DynamoDB, SQS, SNS, EventBridge, Kinesis).
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Среда изоляции:</strong> Технология MicroVM Firecracker.</li>
+                  <li><strong>Максимальное время выполнения:</strong> 15 минут на один вызов.</li>
+                  <li><strong>Выделяемая память:</strong> От 128 МБ до 10 240 МБ (10 ГБ), с пропорциональным выделением vCPU.</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> Node.js, Python, Java, Go, .NET, Ruby, а также поддержка Custom Runtime и OCI-контейнеров (Docker).</li>
+                  <li><strong>Оптимизация:</strong> Provisioned Concurrency для гарантированного отсутствия холодного старта.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://docs.aws.amazon.com/lambda/" target="_blank" rel="noopener">docs.aws.amazon.com/lambda ↗</a>
+                </p>
+              </div>
+            </div>
 
-## 4. Структура проекта
+            <!-- Вкладка 2: Azure Functions -->
+            <div id="tab-azure" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #0078d4;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Microsoft Azure Functions</h3>
+                  <span class="table-tag tag-success">Корпоративный стандарт</span>
+                </div>
+                <p>
+                  <strong>Azure Functions</strong> — мощное решение от Microsoft, ориентированное на бесшовную интеграцию с Active Directory, Office 365, Cosmos DB и средой .NET.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Durable Functions:</strong> Встроенный фреймворк для написания stateful-воркфлоу, оркестрации функций и ожидания внешних событий с сохранением прогресса.</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> C# (.NET), JavaScript/TypeScript, Python, Java, PowerShell.</li>
+                  <li><strong>Гибкость хостинга:</strong> Возможность запуска как в режиме Consumption (чистый serverless), так и на выделенных App Service планах или локально в Kubernetes через KEDA.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://learn.microsoft.com/en-us/azure/azure-functions/" target="_blank" rel="noopener">learn.microsoft.com/azure/azure-functions ↗</a>
+                </p>
+              </div>
+            </div>
 
-```text
-serverless-hub/
-│
-├── index.html                  # Главная страница
-├── about.html                  # Что такое Serverless
-├── architecture.html           # Архитектура бессерверных систем
-├── platforms.html              # Облачные платформы
-├── pros-cons.html              # Преимущества и недостатки
-├── use-cases.html              # 7 сценариев использования
-├── tutorial.html               # Практический воркшоп
-├── security.html               # Безопасность и IAM
-├── comparison.html             # Сравнение архитектурных подходов
-├── glossary.html               # Глоссарий терминов, ссылки и видео
-│
-├── css/
-│   └── style.css               # Стили проекта и надстройки над Milligram
-│
-├── js/
-│   └── script.js               # Скрипт интерактивности (темы, меню, табы, поиск)
-│
-├── images/
-│   ├── logo.svg                # Фирменный векторный логотип Serverless Hub
-│   ├── hero-serverless.svg     # Иллюстрация бессерверного потока в hero-блоке
-│   ├── traditional-vs-serverless.svg # Инфографика сравнения серверов и FaaS
-│   ├── architecture-diagram.svg# Детальная архитектурная схема систем
-│   └── request-lifecycle.svg   # Схема жизненного цикла запроса и Cold Start
-│
-├── read.md                     # Краткая карточка проекта для сдачи
-├── README.md                   # Полная документация проекта
-└── .gitignore                  # Исключения версионирования Git
-```
+            <!-- Вкладка 3: Google Cloud Functions -->
+            <div id="tab-gcp" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #4285f4;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Google Cloud Functions (2nd Gen)</h3>
+                  <span class="table-tag tag-warning">Синергия с Cloud Run</span>
+                </div>
+                <p>
+                  <strong>Google Cloud Functions</strong> — сервис вычислений от Google. Во втором поколении построен поверх Cloud Run и Knative, что превращает каждую функцию в стандартный совместимый OCI-контейнер.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Параллелизм (Concurrency):</strong> До 1000 параллельных запросов на один экземпляр функции (в отличие от модели 1 запрос = 1 экземпляр в традиционном FaaS).</li>
+                  <li><strong>Максимальное время выполнения:</strong> До 60 минут для HTTP-триггеров.</li>
+                  <li><strong>Интеграция:</strong> Прямая связь с BigQuery, Cloud Pub/Sub, Firebase и AI-моделями Google Vertex AI.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://cloud.google.com/functions/docs" target="_blank" rel="noopener">cloud.google.com/functions/docs ↗</a>
+                </p>
+              </div>
+            </div>
 
----
+            <!-- Вкладка 4: Cloudflare Workers -->
+            <div id="tab-cloudflare" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #f6821f;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Cloudflare Workers</h3>
+                  <span class="table-tag tag-info">Периферийные вычисления (Edge)</span>
+                </div>
+                <p>
+                  <strong>Cloudflare Workers</strong> — революционная пограничная FaaS-платформа. Код выполняется не в централизованных дата-центрах, а более чем в 300 городах по всему миру в непосредственной близости к пользователю.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Нулевой холодный старт:</strong> Используются V8 Isolates, время инициализации составляет менее 5 миллисекунд.</li>
+                  <li><strong>Низкая задержка:</strong> Запрос обрабатывается ближайшим узлом CDN сети.</li>
+                  <li><strong>Встроенные хранилища:</strong> Workers KV (key-value), D1 (serverless SQL SQLite), R2 (S3-совместимое объектное хранилище без платы за исходящий трафик).</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> JavaScript, TypeScript, WebAssembly (Rust, C++, Go).</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener">developers.cloudflare.com/workers ↗</a>
+                </p>
+              </div>
+            </div>
 
-## 5. Инструкция по локальному запуску
+            <!-- Вкладка 5: Yandex Cloud Functions -->
+            <div id="tab-yandex" class="tab-pane" role="tabpanel">
+              <div class="card" style="border-left: 4px solid #fc3f1d;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                  <h3>Yandex Cloud Functions</h3>
+                  <span class="table-tag tag-success">Российская инфраструктура</span>
+                </div>
+                <p>
+                  <strong>Yandex Cloud Functions</strong> — отечественная масштабируемая бессерверная платформа, серверы которой расположены в российских дата-центрах с полным соответствием закону 152-ФЗ.
+                </p>
+                <h4>Ключевые возможности:</h4>
+                <ul>
+                  <li><strong>Бесплатный грант:</strong> 1 000 000 вызовов каждый месяц в рамках Free Tier.</li>
+                  <li><strong>Интеграция с YDB:</strong> Высокопроизводительная распределённая бессерверная СУБД с поддержкой строгих ACID-транзакций.</li>
+                  <li><strong>Экосистема триггеров:</strong> Триггеры таймера (cron), очереди Message Queue, события Object Storage, шина данных Data Streams.</li>
+                  <li><strong>Поддерживаемые рантаймы:</strong> Node.js, Python, Go, Java, PHP, Bash.</li>
+                </ul>
+                <p>
+                  <strong>Официальная документация:</strong> <a href="https://yandex.cloud/ru/docs/functions/" target="_blank" rel="noopener">yandex.cloud/ru/docs/functions ↗</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-Проект является полностью статическим, не требует установки Node.js, компиляции или сборки.
+        <!-- Сравнительная семантическая таблица платформ -->
+        <section id="comparison-table" style="margin-bottom: 4rem;">
+          <h2>Сравнительная таблица платформ</h2>
+          <p>
+            Семантическое сравнение ключевых технических характеристик бессерверных сред выполнения:
+          </p>
 
-### Вариант 1. Прямое открытие в браузере:
-1. Распакуйте архив `serverless-hub.zip` (или перейдите в папку `serverless-hub`).
-2. Дважды кликните по файлу `index.html` или откройте его через любой современный браузер (Google Chrome, Яндекс.Браузер, Mozilla Firefox, Microsoft Edge, Safari).
+          <div class="table-responsive">
+            <table>
+              <caption>Сравнительные параметры ведущих облачных FaaS-провайдеров</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Платформа</th>
+                  <th scope="col">Тип среды / Изоляция</th>
+                  <th scope="col">Макс. таймаут</th>
+                  <th scope="col">Объём памяти (RAM)</th>
+                  <th scope="col">Поддержка языков</th>
+                  <th scope="col">Документация</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">AWS Lambda</th>
+                  <td>MicroVM Firecracker</td>
+                  <td>15 минут</td>
+                  <td>128 МБ – 10 ГБ</td>
+                  <td>Node.js, Python, Java, Go, .NET, Docker</td>
+                  <td><a href="https://docs.aws.amazon.com/lambda/" target="_blank" rel="noopener">AWS Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Azure Functions</th>
+                  <td>App Service Sandbox / Docker</td>
+                  <td>10 мин (до 60 мин)</td>
+                  <td>До 14 ГБ (Flex Plan)</td>
+                  <td>C#, JS/TS, Python, Java, PowerShell</td>
+                  <td><a href="https://learn.microsoft.com/en-us/azure/azure-functions/" target="_blank" rel="noopener">Azure Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Google Cloud Functions</th>
+                  <td>gVisor / Cloud Run (OCI)</td>
+                  <td>60 минут</td>
+                  <td>128 МБ – 32 ГБ</td>
+                  <td>Node.js, Python, Go, Java, .NET, Ruby</td>
+                  <td><a href="https://cloud.google.com/functions/docs" target="_blank" rel="noopener">GCP Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Cloudflare Workers</th>
+                  <td>V8 Isolates (Edge)</td>
+                  <td>30 сек (CPU time)</td>
+                  <td>128 МБ – 512 МБ</td>
+                  <td>JS, TS, WebAssembly (Rust, C++)</td>
+                  <td><a href="https://developers.cloudflare.com/workers/" target="_blank" rel="noopener">Cloudflare Docs ↗</a></td>
+                </tr>
+                <tr>
+                  <th scope="row">Yandex Cloud Functions</th>
+                  <td>MicroVM / Linux Cgroups</td>
+                  <td>10 минут</td>
+                  <td>128 МБ – 4 ГБ</td>
+                  <td>Node.js, Python, Go, Java, PHP, Bash</td>
+                  <td><a href="https://yandex.cloud/ru/docs/functions/" target="_blank" rel="noopener">Yandex Docs ↗</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
 
-### Вариант 2. Запуск через локальный веб-сервер (рекомендуется):
-Если на компьютере установлен Python:
-```bash
-cd serverless-hub
-python -m http.server 8000
-```
-Затем откройте в браузере адрес: [http://localhost:8000](http://localhost:8000)
+      </main>
 
-В VS Code можно использовать расширение **Live Server** (кнопка «Go Live» в строке состояния).
+      <!-- Сайдбар -->
+      <aside class="column column-25 site-aside">
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Обратная связь
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Есть вопрос или отзыв по учебному проекту? Напишите автору:</p>
+          <form class="subscribe-form" novalidate>
+            <input type="email" placeholder="Ваш email" required aria-label="Email для связи">
+            <button type="submit" class="button" style="width: 100%;">Отправить</button>
+            <div class="subscribe-feedback" role="alert"></div>
+          </form>
+        </div>
 
----
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            Следующий раздел
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Изучите сильные стороны и скрытые подводные камни бессерверной технологии.</p>
+          <a href="pros-cons.html" class="button button-outline" style="width: 100%;">Плюсы и минусы →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
 
-## 6. Инструкция по публикации на GitHub Pages
+  <!-- Кнопка возврата наверх -->
+  <button id="back-to-top" class="back-to-top" type="button" title="Вернуться к началу страницы" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
 
-1. Убедитесь, что у вас установлен Git и создан аккаунт на [GitHub](https://github.com).
-2. Создайте новый публичный репозиторий с названием `serverless-hub`.
-3. Откройте терминал в папке проекта `serverless-hub` и выполните команды:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit: Serverless Hub project"
-   git branch -M main
-   git remote add origin https://github.com/<ВАШ_ЛОГИН_GITHUB>/serverless-hub.git
-   git push -u origin main
-   ```
-4. В репозитории на GitHub перейдите в раздел **Settings** → **Pages**.
-5. В блоке **Build and deployment**:
-   * **Source:** выберите `Deploy from a branch`.
-   * **Branch:** выберите ветку `main` и папку `/(root)`.
-   * Нажмите **Save**.
-6. Через 1–2 минуты страница обновится, и сверху появится ссылка на опубликованный сайт вида:
-   `https://<ВАШ_ЛОГИН_GITHUB>.github.io/serverless-hub/`
-7. Внесите полученные ссылки в файлы `README.md` и `read.md`, сделайте коммит и отправьте изменения:
-   ```bash
-   git add README.md read.md
-   git commit -m "Update links to published GitHub Pages"
-   git push
-   ```
+  <!-- Подвал сайта -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="column column-40">
+          <h4 class="footer-col-title">Serverless</h4>
+          <p>Учебный проект по дисциплине «Использование CSS-фреймворков». Разработан с использованием Milligram CSS.</p>
+          <p style="font-size: 1.3rem;">
+            <strong>Студент:</strong> Ананьин Ефим Вадимович<br>
+            <strong>Тема № 34:</strong> Бессерверная архитектура (Serverless)<br>
+            <span class="footer-framework-tag">
+              <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+              <strong>CSS-фреймворк:</strong> <a href="https://milligram.io" target="_blank" rel="noopener">Milligram.io</a> (v1.4.1)
+            </span>
+          </p>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Навигация</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О Serverless</a></li>
+            <li><a href="architecture.html">Архитектура</a></li>
+            <li><a href="platforms.html">Платформы</a></li>
+            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
+          </ul>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Связанные разделы</h4>
+          <ul class="footer-links">
+            <li><a href="tutorial.html">Практика</a></li>
+            <li><a href="security.html">Безопасность</a></li>
+            <li><a href="comparison.html">Сравнение архитектур</a></li>
+            <li><a href="glossary.html">Словарь терминов</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Serverless. Все права защищены.</div>
+        <div>Студент: Ананьин Е. В. | CSS-фреймворк Milligram</div>
+      </div>
+    </div>
+  </footer>
 
----
-
-## 7. Авторство и лицензия
-
-* Разработчик: студент **Ананьин Ефим Вадимович**
-* Дисциплина: «Использование CSS-фреймворков»
-* Все материалы подготовлены в образовательных целях.
+  <script src="js/script.js"></script>
+</body>
+</html>
