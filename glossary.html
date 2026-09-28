@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Что такое Serverless — основы, история и принципы | Serverless</title>
-  <meta name="description" content="Подробный разбор концепции бессерверных вычислений: определение, история появления, модель оплаты pay-as-you-go, отличия от традиционных серверов и инфографика.">
+  <title>Словарь терминов и полезные ресурсы Serverless | Serverless</title>
+  <meta name="description" content="Глоссарий ключевых терминов бессерверной архитектуры с живым поиском: FaaS, BaaS, Cold Start, API Gateway. Официальные ссылки на документацию и обучающее видео.">
   <meta name="author" content="Ананьин Ефим Вадимович">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
         <nav class="site-nav" aria-label="Основная навигация">
           <ul>
             <li><a href="index.html" class="nav-link">Главная</a></li>
-            <li><a href="about.html" class="nav-link active">О Serverless</a></li>
+            <li><a href="about.html" class="nav-link">О Serverless</a></li>
             <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
             <li><a href="platforms.html" class="nav-link">Платформы</a></li>
             <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
@@ -40,7 +40,7 @@
             <li><a href="tutorial.html" class="nav-link">Практика</a></li>
             <li><a href="security.html" class="nav-link">Безопасность</a></li>
             <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
-            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
+            <li><a href="glossary.html" class="nav-link active">Словарь</a></li>
           </ul>
         </nav>
 
@@ -65,7 +65,7 @@
     </div>
     <ul class="mobile-nav-list">
       <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
-      <li><a href="about.html" class="mobile-nav-link active">Что такое Serverless</a></li>
+      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
       <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
       <li><a href="platforms.html" class="mobile-nav-link">Облачные платформы</a></li>
       <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
@@ -73,181 +73,249 @@
       <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
       <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
       <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
-      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
+      <li><a href="glossary.html" class="mobile-nav-link active">Словарь и ресурсы</a></li>
     </ul>
   </aside>
 
-  <!-- Основной контент страницы -->
+  <!-- Контент страницы -->
   <div class="container main-wrapper">
-    <!-- Заголовок страницы -->
     <header class="page-header-block">
-      <h1 class="page-title">Что такое Serverless: основы, история и принципы</h1>
+      <h1 class="page-title">Словарь терминов и официальные ресурсы</h1>
       <p class="page-lead">
-        Полное руководство по бессерверной модели разработки: как эволюционировали облачные вычисления, почему разработчики перестают арендовать виртуальные машины и как работает биллинг с точностью до миллисекунды.
+        Интерактивный глоссарий бессерверных технологий: быстрый поиск определений, подборка официальной документации и лекционный видеоматериал.
       </p>
     </header>
 
     <div class="row">
-      <!-- Контентная область -->
       <main class="column column-75">
 
-        <!-- 1. Определение -->
-        <section id="definition" style="margin-bottom: 4rem;">
-          <h2>1. Определение бессерверной архитектуры</h2>
-          <p>
-            <strong>Бессерверная архитектура (Serverless Architecture)</strong> — это модель облачных вычислений, при которой поставщик облачных услуг (AWS, Microsoft Azure, Google Cloud, Cloudflare, Yandex Cloud) полностью берет на себя управление физической и виртуальной инфраструктурой: выделение ресурсов, установку обновлений ОС, сетевое администрирование, обеспечение отказоустойчивости и автомасштабирование.
-          </p>
-          <blockquote>
-            <p>
-              <em>«Если вам приходится управлять операционной системой, настраивать автоматические перезапуски демонов или планировать размер виртуальной машины на случай пиковой нагрузки — это не Serverless.»</em>
-            </p>
-          </blockquote>
-          <p>
-            Главный признак Serverless — это возможность для инженера сосредоточиться исключительно на прикладном исходном коде, упакованном в функции (FaaS) или использующем готовые сервисы (BaaS), при этом стоимость ресурсов в состоянии простоя равна нулю (Scale to Zero).
-          </p>
+        <!-- 1. Поиск по словарю -->
+        <section id="glossary-section" style="margin-bottom: 4rem;">
+          <h2>1. Глоссарий терминов</h2>
+          <p>Введите ключевое слово или аббревиатуру в поле поиска для мгновенной фильтрации списка:</p>
+
+          <div class="glossary-search-wrapper">
+            <input type="search" id="glossary-search" class="glossary-search-input" placeholder="Поиск по термину или описанию (например, Cold Start, FaaS, Gateway)..." aria-label="Поиск по словарю">
+            <div id="glossary-count" class="glossary-stats">Показано терминов: 14 из 14</div>
+          </div>
+
+          <div id="glossary-empty" style="display: none; padding: 2rem; text-align: center; color: var(--text-muted);">
+            По вашему запросу терминов не найдено. Попробуйте изменить формулировку.
+          </div>
+
+          <div class="glossary-list">
+            <!-- Термин 1 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>FaaS (Function as a Service)</span>
+                <span class="glossary-tag">Вычисления</span>
+              </div>
+              <p class="glossary-desc">
+                Модель бессерверных вычислений, при которой разработчик пишет атомарный фрагмент бизнес-логики (функцию), исполняемый облачной платформой по внешнему событию с посекундной тарификацией.
+              </p>
+            </article>
+
+            <!-- Термин 2 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>BaaS (Backend as a Service)</span>
+                <span class="glossary-tag">Сервисы</span>
+              </div>
+              <p class="glossary-desc">
+                Предоставление готовых функциональных блоков бэкенда в виде управляемых облачных сервисов: аутентификация (Cognito, Auth0), базы данных (DynamoDB, Firestore), объектные хранилища (S3) и очереди.
+              </p>
+            </article>
+
+            <!-- Термин 3 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>API Gateway</span>
+                <span class="glossary-tag">Сетевой шлюз</span>
+              </div>
+              <p class="glossary-desc">
+                Управляемый сервис-шлюз, выступающий единой точкой входа для клиентских HTTP/WebSocket запросов. Обеспечивает маршрутизацию, авторизацию по JWT, rate limiting, трансформацию данных и защиту от DoS.
+              </p>
+            </article>
+
+            <!-- Термин 4 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Cold Start (Холодный старт)</span>
+                <span class="glossary-tag">Производительность</span>
+              </div>
+              <p class="glossary-desc">
+                Задержка при первом вызове функции после периода неактивности. Включает время выделения изолированного контейнера или MicroVM, загрузку кода и инициализацию среды выполнения (Node.js/Python).
+              </p>
+            </article>
+
+            <!-- Термин 5 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Warm Start (Тёплый старт)</span>
+                <span class="glossary-tag">Производительность</span>
+              </div>
+              <p class="glossary-desc">
+                Повторный запуск функции на уже активном («прогретом») контейнере. Выполняется практически мгновенно (5–20 мс), так как среда выполнения и открытые сетевые подключения уже инициализированы.
+              </p>
+            </article>
+
+            <!-- Термин 6 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Event-driven Architecture (EDA)</span>
+                <span class="glossary-tag">Архитектура</span>
+              </div>
+              <p class="glossary-desc">
+                Событийно-ориентированная архитектура, в которой компоненты системы взаимодействуют исключительно через создание, обнаружение и асинхронное потребление событий (Events).
+              </p>
+            </article>
+
+            <!-- Термин 7 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Runtime (Среда выполнения)</span>
+                <span class="glossary-tag">Платформа</span>
+              </div>
+              <p class="glossary-desc">
+                Программная среда, предоставляемая облаком для исполнения кода функции на определённом языке программирования (например, Node.js 20.x, Python 3.12, Java 21, .NET 8).
+              </p>
+            </article>
+
+            <!-- Термин 8 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Cloud Computing (Облачные вычисления)</span>
+                <span class="glossary-tag">Инфраструктура</span>
+              </div>
+              <p class="glossary-desc">
+                Модель предоставления повсеместного и удобного сетевого доступа по требованию к пулу конфигурируемых вычислительных ресурсов (серверы, накопители, сети и сервисы) через Интернет.
+              </p>
+            </article>
+
+            <!-- Термин 9 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Stateless (Без сохранения состояния)</span>
+                <span class="glossary-tag">Паттерн</span>
+              </div>
+              <p class="glossary-desc">
+                Принцип проектирования, при котором каждый вызов функции изолирован и не зависит от предыдущих вызовов. Все персистентные данные хранятся во внешних BaaS базах.
+              </p>
+            </article>
+
+            <!-- Термин 10 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>MicroVM (Микровиртуальная машина)</span>
+                <span class="glossary-tag">Виртуализация</span>
+              </div>
+              <p class="glossary-desc">
+                Ультра-легковесная виртуальная машина (например, Firecracker от AWS), запускающаяся за 5 миллисекунд и обеспечивающая изоляцию безопасности уровня гипервизора при расходе памяти всего в несколько мегабайт.
+              </p>
+            </article>
+
+            <!-- Термин 11 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Concurrency (Параллелизм вызовов)</span>
+                <span class="glossary-tag">Масштабирование</span>
+              </div>
+              <p class="glossary-desc">
+                Количество экземпляров функции, одновременно выполняющих запросы в конкретный момент времени. Регулируется квотами облачного провайдера для контроля расходов.
+              </p>
+            </article>
+
+            <!-- Термин 12 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Vendor Lock-in (Привязка к вендору)</span>
+                <span class="glossary-tag">Риски</span>
+              </div>
+              <p class="glossary-desc">
+                Ситуация зависимости архитектуры от проприетарных технологий одного облачного провайдера, делающая миграцию на другую платформу финансово или технически трудоёмкой.
+              </p>
+            </article>
+
+            <!-- Термин 13 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Provisioned Concurrency</span>
+                <span class="glossary-tag">Оптимизация</span>
+              </div>
+              <p class="glossary-desc">
+                Механизм предварительного прогрева заданного числа экземпляров функций в облаке, гарантирующий полное отсутствие холодного старта при всплесках пользовательского трафика.
+              </p>
+            </article>
+
+            <!-- Термин 14 -->
+            <article class="glossary-item">
+              <div class="glossary-term">
+                <span>Edge Computing (Периферийные вычисления)</span>
+                <span class="glossary-tag">Edge</span>
+              </div>
+              <p class="glossary-desc">
+                Выполнение бессерверного кода не в центральном дата-центре, а на серверах CDN в сотнях городов по всему миру рядом с конечным пользователем (Cloudflare Workers, Fastly Compute).
+              </p>
+            </article>
+          </div>
         </section>
 
-        <!-- 2. История эволюции -->
-        <section id="history" style="margin-bottom: 4rem;">
-          <h2>2. История появления Serverless</h2>
-          <p>
-            Чтобы понять мотивацию перехода к бессерверным вычислениям, рассмотрим четыре ключевых этапа развития серверной инфраструктуры в ИТ:
-          </p>
+        <!-- 2. Полезные официальные ресурсы -->
+        <section id="official-resources" style="margin-bottom: 4rem;">
+          <h2>2. Официальные ресурсы и спецификации</h2>
+          <p>Рекомендуемые первоисточники для глубокого изучения стандартов и практик:</p>
 
           <div class="row">
             <div class="column column-50">
               <div class="card">
-                <h4>Этап 1: On-Premise (Собственные серверы)</h4>
-                <p style="font-size: 1.4rem;">
-                  Компании покупали физические серверные стойки в дата-центрах. Закупка оборудования занимала месяцы, требовался штат системных администраторов, а простои оплачивались из кармана бизнеса.
-                </p>
-              </div>
-            </div>
-            <div class="column column-50">
-              <div class="card">
-                <h4>Этап 2: IaaS (Инфраструктура как сервис)</h4>
-                <p style="font-size: 1.4rem;">
-                  Появление Amazon EC2 в 2006 году. Виртуальные машины стали создаваться за минуты по API. Однако администрирование ОС, настройка балансировщиков и патчинг безопасности всё ещё лежали на инженере.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="column column-50">
-              <div class="card">
-                <h4>Этап 3: PaaS &amp; Контейнеры (Docker/K8s)</h4>
-                <p style="font-size: 1.4rem;">
-                  Heroku и Google App Engine показали прелесть изоляции приложений. Позже Docker и Kubernetes упростили оркестрацию, но кластеры K8s потребовали колоссальных затрат на эксплуатацию и мониторинг.
-                </p>
-              </div>
-            </div>
-            <div class="column column-50">
-              <div class="card" style="border-color: var(--accent-violet);">
-                <h4>Этап 4: FaaS и Serverless (Эра функций)</h4>
-                <p style="font-size: 1.4rem;">
-                  В 2014 году AWS представила <strong>Lambda</strong>. Концепция атомарной функции, запускаемой по событию, совершила революцию: оплата стала посекундной, а масштабирование — автоматическим от 0 до бесконечности.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 3. Основные принципы работы -->
-        <section id="principles" style="margin-bottom: 4rem;">
-          <h2>3. Ключевые архитектурные принципы</h2>
-          <p>Бессерверные приложения строятся на пяти фундаментальных принципах:</p>
-
-          <div class="flow-grid">
-            <div class="flow-step-card">
-              <div class="flow-step-num">A</div>
-              <h4>Stateless (Без состояния)</h4>
-              <p>Функции не сохраняют состояние в локальной оперативной памяти между вызовами. Все постоянные данные хранятся во внешних BaaS (БД, S3, Redis).</p>
-            </div>
-            <div class="flow-step-card">
-              <div class="flow-step-num">B</div>
-              <h4>Event-driven (Событийность)</h4>
-              <p>Код не крутится в бесконечном цикле `while(true)`. Функция «спит» и активируется только в момент поступления зарегистрированного события.</p>
-            </div>
-            <div class="flow-step-card">
-              <div class="flow-step-num">C</div>
-              <h4>Ephemeral (Эфемерность)</h4>
-              <p>Среда исполнения функции создаётся для конкретной задачи, работает от нескольких миллисекунд до нескольких минут и затем уничтожается.</p>
-            </div>
-            <div class="flow-step-card">
-              <div class="flow-step-num">D</div>
-              <h4>Scale to Zero</h4>
-              <p>При отсутствии пользователей или входящих запросов в облаке не работает ни один экземпляр функции. Потребление ресурсов равно абсолютному нулю.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- 4. Инфографика: Традиционная архитектура vs Serverless -->
-        <section id="infographic" style="margin-bottom: 4rem;">
-          <h2>4. Инфографика: Традиционная архитектура против Serverless</h2>
-          <p>
-            Сравнение модели постоянного выделения виртуального сервера (Dedicated VM) и бессерверной обработки по требованию (FaaS):
-          </p>
-          <figure style="margin: 2rem 0;">
-            <img src="images/traditional-vs-serverless.svg" alt="Инфографика различий традиционной инфраструктуры и Serverless" style="border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
-            <figcaption style="font-size: 1.3rem; color: var(--text-muted); margin-top: 0.8rem; text-align: center;">
-              Рис. 2 — Экономическая и вычислительная модель традиционного сервера в сравнении с FaaS
-            </figcaption>
-          </figure>
-        </section>
-
-        <!-- 5. Модель оплаты (Pay-as-you-go) -->
-        <section id="pricing" style="margin-bottom: 4rem;">
-          <h2>5. Экономика Serverless: оплата за фактические ресурсы</h2>
-          <p>
-            В традиционном подходе компания арендует виртуальный сервер (например, 4 vCPU, 16 ГБ RAM) за фиксированную сумму в месяц (например, $80/мес). Если сервер нагружен всего на 5% (ночью или в периоды спада), оставшиеся 95% оплаченной мощности сгорают впустую.
-          </p>
-          <p>
-            В Serverless стоимость рассчитывается по формуле:
-          </p>
-          <div class="card" style="background-color: var(--bg-surface-elevated); font-family: 'JetBrains Mono', monospace; font-size: 1.5rem;">
-            Стоимость = Количество вызовов × Время работы (в мс) × Выделенная память (ГБ)
-          </div>
-          <p>
-            Большинство платформ (AWS Lambda, Cloudflare Workers, Yandex Cloud) предоставляют щедрый <strong>бесплатный уровень (Free Tier)</strong>: до 1 000 000 бесплатных вызовов функций каждый месяц. Для стартапов, учебных проектов и умеренно нагруженных сервисов это позволяет разрабатывать решения с нулевыми затратами на инфраструктуру.
-          </p>
-        </section>
-
-        <!-- 6. Преимущества и базовые ограничения -->
-        <section id="pros-cons-summary" style="margin-bottom: 4rem;">
-          <h2>6. Экспресс-обзор достоинств и ограничений</h2>
-          <div class="row">
-            <div class="column column-50">
-              <div class="card" style="border-left: 4px solid #10b981;">
-                <h4 style="color: #10b981;">Ключевые плюсы</h4>
+                <h4>Документация платформ</h4>
                 <ul style="padding-left: 1.8rem; margin-bottom: 0;">
-                  <li>Экономия бюджета: плата строго за факты вызовов.</li>
-                  <li>Нулевые накладные расходы на DevOps и сисадминов.</li>
-                  <li>Высокая отказоустойчивость из коробки в нескольких зонах доступности.</li>
-                  <li>Быстрое прототипирование и развёртывание.</li>
+                  <li><a href="https://docs.aws.amazon.com/lambda/" target="_blank" rel="noopener">AWS Lambda Documentation ↗</a></li>
+                  <li><a href="https://learn.microsoft.com/en-us/azure/azure-functions/" target="_blank" rel="noopener">Microsoft Azure Functions Docs ↗</a></li>
+                  <li><a href="https://cloud.google.com/functions/docs" target="_blank" rel="noopener">Google Cloud Functions Docs ↗</a></li>
+                  <li><a href="https://yandex.cloud/ru/docs/functions/" target="_blank" rel="noopener">Yandex Cloud Functions ↗</a></li>
                 </ul>
               </div>
             </div>
             <div class="column column-50">
-              <div class="card" style="border-left: 4px solid #ef4444;">
-                <h4 style="color: #ef4444;">Ограничения</h4>
+              <div class="card">
+                <h4>Стандарты и открытые проекты</h4>
                 <ul style="padding-left: 1.8rem; margin-bottom: 0;">
-                  <li>Холодный старт (Cold Start) при первом вызове.</li>
-                  <li>Лимит максимального времени исполнения (от 15 с до 15 мин).</li>
-                  <li>Привязка к API конкретного облачного вендора.</li>
-                  <li>Сложность сквозной отладки распределённых систем.</li>
+                  <li><a href="https://github.com/cloudevents/spec" target="_blank" rel="noopener">CNCF CloudEvents Specification ↗</a></li>
+                  <li><a href="https://www.serverless.com/" target="_blank" rel="noopener">Serverless Framework CLI ↗</a></li>
+                  <li><a href="https://firecracker-microvm.github.io/" target="_blank" rel="noopener">Firecracker MicroVM Project ↗</a></li>
+                  <li><a href="https://milligram.io/" target="_blank" rel="noopener">Официальный сайт Milligram CSS ↗</a></li>
                 </ul>
               </div>
             </div>
           </div>
-          <p style="margin-top: 1.5rem;">
-            Детальный разбор каждого ограничения и методов их компенсации представлен в разделе <a href="pros-cons.html">«Преимущества и недостатки»</a>.
+        </section>
+
+        <!-- 3. Встроенное обучающее видео -->
+        <section id="video-section" style="margin-bottom: 4rem;">
+          <h2>3. Обучающий видеоматериал по Serverless</h2>
+          <p>
+            Наглядная видеолекция, иллюстрирующая архитектурные принципы бессерверных вычислений и сравнение с классическими серверами:
           </p>
+
+          <div class="video-container">
+            <iframe 
+              src="https://rutube.ru/play/embed/fab40fffeebf50e102b31ca4fe94d01e/" 
+              title="Антон Черепанов. Serverless Architecture and AWS" 
+              allow="clipboard-write; autoplay; fullscreen" 
+              allowfullscreen
+              loading="lazy">
+            </iframe>
+          </div>
+
+          <div class="card" style="font-size: 1.35rem; color: var(--text-muted); background-color: var(--bg-surface-elevated);">
+            <strong>Видеоматериал:</strong> Антон Черепанов — <em>«Serverless Architecture and AWS»</em>. Разбор бессерверной архитектуры на русском языке. Прямые ссылки на видео: <a href="https://yandex.ru/video/preview/267301312799122543" target="_blank" rel="noopener">Яндекс.Видео</a> и <a href="https://rutube.ru/video/fab40fffeebf50e102b31ca4fe94d01e/" target="_blank" rel="noopener">Rutube</a>.
+          </div>
         </section>
 
       </main>
 
-      <!-- Сайдбар страницы -->
+      <!-- Сайдбар -->
       <aside class="column column-25 site-aside">
         <div class="aside-widget">
           <h3 class="widget-title">
@@ -265,10 +333,10 @@
         <div class="aside-widget">
           <h3 class="widget-title">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            Следующий шаг
+            К началу курса
           </h3>
-          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Изучите анатомию бессерверной системы и компоненты FaaS/BaaS.</p>
-          <a href="architecture.html" class="button button-outline" style="width: 100%;">Архитектура →</a>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Вернитесь на главную страницу или начните изучение с первого раздела.</p>
+          <a href="index.html" class="button button-outline" style="width: 100%;">Главная страница →</a>
         </div>
       </aside>
     </div>
@@ -299,22 +367,22 @@
           </p>
         </div>
         <div class="column column-30">
-          <h4 class="footer-col-title">Разделы портала</h4>
+          <h4 class="footer-col-title">Навигация</h4>
           <ul class="footer-links">
-            <li><a href="index.html">Главная страница</a></li>
-            <li><a href="about.html">Что такое Serverless</a></li>
-            <li><a href="architecture.html">Архитектура и компоненты</a></li>
-            <li><a href="platforms.html">Облачные платформы</a></li>
-            <li><a href="pros-cons.html">Преимущества и недостатки</a></li>
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О Serverless</a></li>
+            <li><a href="architecture.html">Архитектура</a></li>
+            <li><a href="platforms.html">Платформы</a></li>
+            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
           </ul>
         </div>
         <div class="column column-30">
-          <h4 class="footer-col-title">Связанные ресурсы</h4>
+          <h4 class="footer-col-title">Материалы</h4>
           <ul class="footer-links">
-            <li><a href="tutorial.html">Практика написания функций</a></li>
-            <li><a href="security.html">Безопасность Serverless</a></li>
-            <li><a href="comparison.html">Сравнение с монолитами</a></li>
-            <li><a href="glossary.html">Словарь терминов</a></li>
+            <li><a href="use-cases.html">Примеры использования</a></li>
+            <li><a href="tutorial.html">Практика и код</a></li>
+            <li><a href="security.html">Безопасность систем</a></li>
+            <li><a href="comparison.html">Сравнение архитектур</a></li>
           </ul>
         </div>
       </div>

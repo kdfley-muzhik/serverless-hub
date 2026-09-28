@@ -1,392 +1,329 @@
-/**
- * Serverless Hub — Главный скрипт интерактивности
- * Дисциплина: Использование CSS-фреймворков
- * Студент: Ананьин Ефим Вадимович | Тема № 34
- */
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Архитектура Serverless — компоненты, схемы и жизненный цикл | Serverless</title>
+  <meta name="description" content="Подробный архитектурный разбор бессерверных систем: FaaS, BaaS, API Gateway, Serverless базы данных, событийная модель Event-Driven и схема жизненного цикла HTTP-запроса.">
+  <meta name="author" content="Ананьин Ефим Вадимович">
 
-document.addEventListener('DOMContentLoaded', () => {
-  initThemeToggle();
-  initMobileMenu();
-  initBackToTop();
-  initActiveNav();
-  initAccordions();
-  initSubscribeForms();
-  initGlossarySearch();
-  initPlatformTabs();
-  initCodeCopy();
-  initServerlessSimulator();
-});
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-/* ==========================================================================
-   1. Переключатель светлой и тёмной темы (с сохранением в LocalStorage)
-   ========================================================================== */
-function initThemeToggle() {
-  const toggleBtn = document.getElementById('theme-toggle');
-  if (!toggleBtn) return;
+  <!-- Favicon: официальная иконка Milligram CSS -->
+  <link rel="icon" type="image/svg+xml" href="images/milligram-logo.svg">
 
-  const currentTheme = localStorage.getItem('serverless_theme') || 
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-  setTheme(currentTheme);
+  <!-- Шапка сайта -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="brand-wrapper" aria-label="Serverless Главная">
+          <img src="images/logo.svg" alt="Логотип Serverless" class="brand-logo" width="38" height="38">
+          <span class="brand-name">Serverless</span>
+        </a>
 
-  toggleBtn.addEventListener('click', () => {
-    const activeTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    setTheme(activeTheme);
-  });
-}
+        <nav class="site-nav" aria-label="Основная навигация">
+          <ul>
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="about.html" class="nav-link">О Serverless</a></li>
+            <li><a href="architecture.html" class="nav-link active">Архитектура</a></li>
+            <li><a href="platforms.html" class="nav-link">Платформы</a></li>
+            <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
+            <li><a href="use-cases.html" class="nav-link">Примеры</a></li>
+            <li><a href="tutorial.html" class="nav-link">Практика</a></li>
+            <li><a href="security.html" class="nav-link">Безопасность</a></li>
+            <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
+            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
+          </ul>
+        </nav>
 
-function setTheme(theme) {
-  document.documentElement.setAttribute('data-theme', theme);
-  localStorage.setItem('serverless_theme', theme);
+                <div class="header-actions">
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="Переключить тему оформления" aria-label="Переключить тему">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="burger-btn" class="burger-btn" type="button" title="Открыть мобильное меню" aria-label="Открыть мобильное меню">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-  const toggleBtn = document.getElementById('theme-toggle');
-  if (toggleBtn) {
-    if (theme === 'dark') {
-      toggleBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"></circle>
-          <line x1="12" y1="1" x2="12" y2="3"></line>
-          <line x1="12" y1="21" x2="12" y2="23"></line>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-          <line x1="1" y1="12" x2="3" y2="12"></line>
-          <line x1="21" y1="12" x2="23" y2="12"></line>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>`;
-      toggleBtn.setAttribute('title', 'Включить светлую тему');
-      toggleBtn.setAttribute('aria-label', 'Включить светлую тему');
-    } else {
-      toggleBtn.innerHTML = `
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>`;
-      toggleBtn.setAttribute('title', 'Включить тёмную тему');
-      toggleBtn.setAttribute('aria-label', 'Включить тёмную тему');
-    }
-  }
-}
+  <!-- Мобильное меню -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Мобильное меню">
+    <div class="mobile-nav-header">
+      <span class="brand-name">Serverless</span>
+      <button id="mobile-nav-close" class="button-clear" type="button" aria-label="Закрыть меню" style="font-size: 2.4rem; padding: 0;">✕</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
+      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
+      <li><a href="architecture.html" class="mobile-nav-link active">Архитектура систем</a></li>
+      <li><a href="platforms.html" class="mobile-nav-link">Облачные платформы</a></li>
+      <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
+      <li><a href="use-cases.html" class="mobile-nav-link">Примеры использования</a></li>
+      <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
+      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
+      <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
+      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
+    </ul>
+  </aside>
 
-/* ==========================================================================
-   2. Мобильное бургер-меню (Drawer & Overlay)
-   ========================================================================== */
-function initMobileMenu() {
-  const burgerBtn = document.getElementById('burger-btn');
-  const closeBtn = document.getElementById('mobile-nav-close');
-  const drawer = document.getElementById('mobile-nav-drawer');
-  const overlay = document.getElementById('mobile-nav-overlay');
+  <!-- Контент страницы -->
+  <div class="container main-wrapper">
+    <header class="page-header-block">
+      <h1 class="page-title">Архитектура Serverless: компоненты и жизненный цикл</h1>
+      <p class="page-lead">
+        Глубокое погружение во внутреннее устройство бессерверных приложений: как взаимодействуют FaaS, BaaS, API Gateway, распределённые очереди событий и базы данных нового поколения.
+      </p>
+    </header>
 
-  if (!burgerBtn || !drawer || !overlay) return;
+    <div class="row">
+      <main class="column column-75">
 
-  function openMenu() {
-    drawer.classList.add('open');
-    overlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+        <!-- 1. Архитектурная схема -->
+        <section id="schema" style="margin-bottom: 4rem;">
+          <h2>1. Генеральная схема архитектуры</h2>
+          <p>
+            В современной бессерверной архитектуре система декомпозируется на независимые, слабосвязанные сервисы, взаимодействующие через асинхронные очереди или синхронные вызовы API Gateway:
+          </p>
+          <figure style="margin: 2rem 0;">
+            <img src="images/architecture-diagram.svg" alt="Подробная архитектурная схема Serverless: Клиенты, Шлюз, FaaS и BaaS" style="border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+            <figcaption style="font-size: 1.3rem; color: var(--text-muted); margin-top: 0.8rem; text-align: center;">
+              Рис. 3 — Архитектурная схема связей между клиентами, шлюзом, вычислительными функциями и сервисами данных
+            </figcaption>
+          </figure>
+        </section>
 
-  function closeMenu() {
-    drawer.classList.remove('open');
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+        <!-- 2. FaaS: Function as a Service -->
+        <section id="faas" style="margin-bottom: 4rem;">
+          <h2>2. FaaS (Function as a Service)</h2>
+          <p>
+            <strong>FaaS</strong> — это вычислительное сердце бессерверной парадигмы. Разработчик загружает в облако изолированную функцию (handler), принимающую объект события (event) и возвращающую результат.
+          </p>
+          <p>
+            Как платформа изолирует функции?
+          </p>
+          <ul>
+            <li><strong>MicroVM (Микровиртуальные машины):</strong> Такие технологии, как <em>Firecracker</em> (используется в AWS Lambda), запускают легковесную виртуальную машину Linux на базе KVM за рекордные 5–15 миллисекунд с расходом памяти всего ~5 МБ.</li>
+            <li><strong>V8 Isolates:</strong> Подход, применяемый в Cloudflare Workers. Функции выполняются внутри изолированных контекстов движка V8 без запуска полноценной ОС, что обеспечивает холодный старт за 0–5 миллисекунд.</li>
+          </ul>
+        </section>
 
-  burgerBtn.addEventListener('click', openMenu);
-  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
-  overlay.addEventListener('click', closeMenu);
+        <!-- 3. BaaS: Backend as a Service -->
+        <section id="baas" style="margin-bottom: 4rem;">
+          <h2>3. BaaS (Backend as a Service)</h2>
+          <p>
+            Поскольку бессерверные функции не имеют постоянного локального состояния (Stateless), они активно делегируют вспомогательные задачи готовым управляемым облачным сервисам:
+          </p>
+          <div class="row">
+            <div class="column column-50">
+              <div class="card">
+                <h4>Аутентификация и пользователи</h4>
+                <p style="font-size: 1.4rem;">Сервисы вроде AWS Cognito, Firebase Auth или Auth0 берут на себя регистрацию, сброс паролей, MFA и выдачу подписанных JWT-токенов.</p>
+              </div>
+            </div>
+            <div class="column column-50">
+              <div class="card">
+                <h4>Объектное хранилище</h4>
+                <p style="font-size: 1.4rem;">Хранилища S3 или Yandex Object Storage хранят файлы, медиа и резервные копии с доступностью 99.999999999% (11 девяток).</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && drawer.classList.contains('open')) {
-      closeMenu();
-    }
-  });
+        <!-- 4. API Gateway -->
+        <section id="api-gateway" style="margin-bottom: 4rem;">
+          <h2>4. Роль и функции API Gateway</h2>
+          <p>
+            <strong>API Gateway (Шлюз API)</strong> служит единой точкой входа (Single Point of Entry) для внешних HTTP-клиентов:
+          </p>
+          <div class="flow-grid">
+            <div class="flow-step-card">
+              <h4>Маршрутизация</h4>
+              <p>Сопоставляет URL и HTTP-метод (GET, POST, PUT) с соответствующей лямбда-функцией.</p>
+            </div>
+            <div class="flow-step-card">
+              <h4>Авторизация</h4>
+              <p>Валидирует JWT-токены до вызова дорогостоящего кода функции, отсекая неавторизованных пользователей.</p>
+            </div>
+            <div class="flow-step-card">
+              <h4>Троттлинг &amp; WAF</h4>
+              <p>Ограничивает частоту запросов (Rate Limiting) для защиты от DoS-атак и всплесков нагрузки.</p>
+            </div>
+            <div class="flow-step-card">
+              <h4>Трансформация</h4>
+              <p>Преобразует HTTP-запрос в стандартный JSON-объект события (Event Object) и валидирует схему параметров.</p>
+            </div>
+          </div>
+        </section>
 
-  // Автоматическое закрытие меню при переходе по ссылке
-  drawer.querySelectorAll('.mobile-nav-link').forEach(link => {
-    link.addEventListener('click', closeMenu);
-  });
-}
+        <!-- 5. Базы данных в Serverless -->
+        <section id="databases" style="margin-bottom: 4rem;">
+          <h2>5. Базы данных в бессерверной среде</h2>
+          <p>
+            Классические реляционные СУБД (например, традиционный PostgreSQL на одном сервере) плохо подходят для Serverless, потому что при внезапном всплеске трафика 10 000 параллельных функций могут открыть 10 000 одновременных TCP-соединений и исчерпать лимит пула базы (Connection Pool Exhaustion).
+          </p>
+          <p>
+            Поэтому в Serverless применяются специализированные базы данных:
+          </p>
+          <ul>
+            <li><strong>Управляемые NoSQL базы:</strong> Amazon DynamoDB, Google Cloud Firestore, Yandex Database (YDB Serverless). Они масштабируют чтение и запись горизонтально по HTTP/gRPC интерфейсам.</li>
+            <li><strong>Serverless SQL с проксированием соединений:</strong> Amazon Aurora Serverless v2, Neon Postgres, Supabase — используют встроенные пулеры (PgBouncer/RDS Proxy) для безопасного мультиплексирования подключений.</li>
+          </ul>
+        </section>
 
-/* ==========================================================================
-   3. Кнопка возврата наверх (Back to Top)
-   ========================================================================== */
-function initBackToTop() {
-  const backToTopBtn = document.getElementById('back-to-top');
-  if (!backToTopBtn) return;
+        <!-- 6. Событийная архитектура (Event-Driven) -->
+        <section id="event-driven" style="margin-bottom: 4rem;">
+          <h2>6. Событийно-ориентированная архитектура (EDA)</h2>
+          <p>
+            Бессерверные приложения фундаментально основаны на концепции <strong>Event-Driven Architecture</strong>. Событием может быть:
+          </p>
+          <ul>
+            <li>Загрузка пользователем аватара в S3 Bucket (событие: `s3:ObjectCreated`).</li>
+            <li>Транзакция оплаты в Stripe, отправленная через Webhook.</li>
+            <li>Сигнал телеметрии от датчика температуры в IoT-устройстве.</li>
+            <li>Сообщение, помещённое в очередь задач (AWS SQS, RabbitMQ, Kafka).</li>
+          </ul>
+          <p>
+            Шины событий (например, <em>Amazon EventBridge</em>) работают как интеллектуальный почтальон: они получают событие, фильтруют его по заданным правилам и перенаправляют целевой функции для немедленной параллельной обработки.
+          </p>
+        </section>
 
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 350) {
-      backToTopBtn.classList.add('visible');
-    } else {
-      backToTopBtn.classList.remove('visible');
-    }
-  });
+        <!-- 7. Жизненный цикл HTTP-запроса -->
+        <section id="lifecycle" style="margin-bottom: 4rem;">
+          <h2>7. Жизненный цикл обработки HTTP-запроса</h2>
+          <p>
+            Рассмотрим, что происходит под капотом, когда клиент делает запрос к бессерверному эндпоинту:
+          </p>
+          <figure style="margin: 2rem 0;">
+            <img src="images/request-lifecycle.svg" alt="Жизненный цикл запроса: Cold Start и Warm Start" style="border-radius: var(--radius-md); box-shadow: var(--shadow-md);">
+            <figcaption style="font-size: 1.3rem; color: var(--text-muted); margin-top: 0.8rem; text-align: center;">
+              Рис. 4 — Разница во времени отклика между холодным (Cold Start) и тёплым (Warm Start) запусками
+            </figcaption>
+          </figure>
+          <ol style="padding-left: 2rem;">
+            <li><strong>DNS &amp; TLS:</strong> Клиент обращается к доменному имени. Запрос поступает на пограничный сервер CDN / Edge.</li>
+            <li><strong>Шлюз:</strong> API Gateway верифицирует заголовки, проверяет квоту и формирует Event payload.</li>
+            <li><strong>Холодный запуск (при первом вызове):</strong> Облачная система оркестрации загружает код функции, поднимает изолированную MicroVM и инициализирует среду Node.js/Python (150–500 мс).</li>
+            <li><strong>Тёплый запуск (при последующих вызовах):</strong> Контейнер уже находится в памяти («подогрет»). Вызов передаётся напрямую в обработчик (5–20 мс).</li>
+            <li><strong>Завершение и заморозка:</strong> Функция возвращает HTTP-ответ. Среда выполнения замораживается (freeze) и ожидает следующих запросов в течение 10–20 минут перед утилизацией.</li>
+          </ol>
+        </section>
 
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
+      </main>
 
-/* ==========================================================================
-   4. Подсветка активной страницы в навигации
-   ========================================================================== */
-function initActiveNav() {
-  const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+      <!-- Сайдбар -->
+      <aside class="column column-25 site-aside">
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            Содержание темы
+          </h3>
+          <ul class="toc-list">
+            <li><a href="#schema">1. Схема архитектуры</a></li>
+            <li><a href="#faas">2. Компонент FaaS</a></li>
+            <li><a href="#baas">3. Компонент BaaS</a></li>
+            <li><a href="#api-gateway">4. API Gateway</a></li>
+            <li><a href="#databases">5. Бессерверные СУБД</a></li>
+            <li><a href="#event-driven">6. Событийная EDA</a></li>
+            <li><a href="#lifecycle">7. Жизненный цикл</a></li>
+          </ul>
+        </div>
 
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-      link.classList.add('active');
-    }
-  });
-}
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            Архитектурный факт
+          </h3>
+          <div class="fact-box">
+            Технология <strong>Firecracker</strong> от Amazon написана на языке Rust и имеет открытый исходный код (Open Source). Она запускает минимальное ядро Linux без лишних драйверов за 5 миллисекунд, обеспечивая изоляцию уровня гипервизора!
+          </div>
+        </div>
 
-/* ==========================================================================
-   5. Раскрывающиеся списки / Аккордеон (FAQ)
-   ========================================================================== */
-function initAccordions() {
-  const headers = document.querySelectorAll('.accordion-header');
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            Архитектурный дайджест
+          </h3>
+          <form class="subscribe-form" novalidate>
+            <input type="email" placeholder="Email для подписки" required aria-label="Email">
+            <button type="submit" class="button" style="width: 100%;">Подписаться</button>
+            <div class="subscribe-feedback" role="alert"></div>
+          </form>
+        </div>
 
-  headers.forEach(header => {
-    header.addEventListener('click', () => {
-      const item = header.parentElement;
-      const isActive = item.classList.contains('active');
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            Куда дальше?
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Сравните ведущих облачных провайдеров, предоставляющих FaaS-платформы.</p>
+          <a href="platforms.html" class="button button-outline" style="width: 100%;">Облачные платформы →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
 
-      // Закрываем другие элементы внутри той же группы (опционально)
-      const parentGroup = item.closest('.accordion-group');
-      if (parentGroup) {
-        parentGroup.querySelectorAll('.accordion-item').forEach(sibling => {
-          if (sibling !== item) sibling.classList.remove('active');
-        });
-      }
+  <!-- Кнопка возврата наверх -->
+  <button id="back-to-top" class="back-to-top" type="button" title="Вернуться к началу страницы" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
 
-      item.classList.toggle('active', !isActive);
-    });
-  });
-}
+  <!-- Подвал сайта -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="column column-40">
+          <h4 class="footer-col-title">Serverless</h4>
+          <p>Учебный проект по дисциплине «Использование CSS-фреймворков». Разработан с использованием Milligram CSS.</p>
+          <p style="font-size: 1.3rem;">
+            <strong>Студент:</strong> Ананьин Ефим Вадимович<br>
+            <strong>Тема № 34:</strong> Бессерверная архитектура (Serverless)<br>
+            <span class="footer-framework-tag">
+              <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+              <strong>CSS-фреймворк:</strong> <a href="https://milligram.io" target="_blank" rel="noopener">Milligram.io</a> (v1.4.1)
+            </span>
+          </p>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Навигация</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О Serverless</a></li>
+            <li><a href="architecture.html">Архитектура</a></li>
+            <li><a href="platforms.html">Платформы</a></li>
+            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
+          </ul>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Ресурсы</h4>
+          <ul class="footer-links">
+            <li><a href="tutorial.html">Практика</a></li>
+            <li><a href="security.html">Безопасность</a></li>
+            <li><a href="comparison.html">Сравнение архитектур</a></li>
+            <li><a href="glossary.html">Словарь терминов</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Serverless. Все права защищены.</div>
+        <div>Студент: Ананьин Е. В. | CSS-фреймворк Milligram</div>
+      </div>
+    </div>
+  </footer>
 
-/* ==========================================================================
-   6. Форма подписки с клиентской валидацией
-   ========================================================================== */
-function initSubscribeForms() {
-  const forms = document.querySelectorAll('.subscribe-form');
-
-  forms.forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const emailInput = form.querySelector('input[type="email"]');
-      const feedback = form.querySelector('.subscribe-feedback');
-      if (!emailInput || !feedback) return;
-
-      const emailVal = emailInput.value.trim();
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-      if (!emailRegex.test(emailVal)) {
-        feedback.className = 'subscribe-feedback error';
-        feedback.textContent = 'Пожалуйста, укажите корректный email адрес.';
-        emailInput.focus();
-      } else {
-        feedback.className = 'subscribe-feedback success';
-        feedback.textContent = '✓ Спасибо! Сообщение отправлено.';
-        emailInput.value = '';
-        setTimeout(() => {
-          feedback.style.display = 'none';
-          feedback.className = 'subscribe-feedback';
-        }, 5000);
-      }
-    });
-  });
-}
-
-/* ==========================================================================
-   7. Поиск по словарю терминов (Live Search)
-   ========================================================================== */
-function initGlossarySearch() {
-  const searchInput = document.getElementById('glossary-search');
-  const countDisplay = document.getElementById('glossary-count');
-  const emptyState = document.getElementById('glossary-empty');
-  const items = document.querySelectorAll('.glossary-item');
-
-  if (!searchInput || !items.length) return;
-
-  function performSearch() {
-    const query = searchInput.value.toLowerCase().trim();
-    let visibleCount = 0;
-
-    items.forEach(item => {
-      const term = item.querySelector('.glossary-term')?.textContent.toLowerCase() || '';
-      const desc = item.querySelector('.glossary-desc')?.textContent.toLowerCase() || '';
-      const match = term.includes(query) || desc.includes(query);
-
-      if (match) {
-        item.style.display = 'block';
-        visibleCount++;
-      } else {
-        item.style.display = 'none';
-      }
-    });
-
-    if (countDisplay) {
-      countDisplay.textContent = `Показано терминов: ${visibleCount} из ${items.length}`;
-    }
-
-    if (emptyState) {
-      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-    }
-  }
-
-  searchInput.addEventListener('input', performSearch);
-}
-
-/* ==========================================================================
-   8. Интерактивные вкладки на странице платформ (Tabs)
-   ========================================================================== */
-function initPlatformTabs() {
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  const tabPanes = document.querySelectorAll('.tab-pane');
-
-  if (!tabButtons.length) return;
-
-  tabButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetId = btn.getAttribute('data-target');
-
-      tabButtons.forEach(b => b.classList.remove('active'));
-      tabPanes.forEach(pane => pane.classList.remove('active'));
-
-      btn.classList.add('active');
-      const targetPane = document.getElementById(targetId);
-      if (targetPane) targetPane.classList.add('active');
-    });
-  });
-}
-
-/* ==========================================================================
-   9. Кнопки копирования кода
-   ========================================================================== */
-function initCodeCopy() {
-  const copyButtons = document.querySelectorAll('.copy-btn');
-
-  copyButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const codeBox = btn.closest('.code-box');
-      if (!codeBox) return;
-
-      const codeElem = codeBox.querySelector('code');
-      if (!codeElem) return;
-
-      const text = codeElem.innerText;
-
-      navigator.clipboard.writeText(text).then(() => {
-        const originalText = btn.textContent;
-        btn.textContent = 'Скопировано! ✓';
-        btn.classList.add('copied');
-
-        setTimeout(() => {
-          btn.textContent = originalText;
-          btn.classList.remove('copied');
-        }, 2200);
-      }).catch(err => {
-        console.error('Не удалось скопировать текст:', err);
-      });
-    });
-  });
-}
-
-/* ==========================================================================
-   10. Интерактивный эмулятор Serverless Handler (на tutorial.html)
-   ========================================================================== */
-function initServerlessSimulator() {
-  const runBtn = document.getElementById('run-simulator-btn');
-  const methodSelect = document.getElementById('sim-method');
-  const pathSelect = document.getElementById('sim-path');
-  const outputBox = document.getElementById('simulator-output');
-
-  if (!runBtn || !outputBox) return;
-
-  runBtn.addEventListener('click', () => {
-    const method = methodSelect.value;
-    const path = pathSelect.value;
-    const executionId = 'req-' + Math.random().toString(36).substring(2, 9);
-    const timestamp = new Date().toISOString();
-
-    // Симуляция объекта Event из API Gateway
-    const mockEvent = {
-      version: "2.0",
-      routeKey: `${method} ${path}`,
-      rawPath: path,
-      headers: {
-        "content-type": "application/json",
-        "user-agent": "ServerlessHubBrowserClient/1.0"
-      },
-      requestContext: {
-        http: {
-          method: method,
-          path: path,
-          protocol: "HTTP/1.1",
-          sourceIp: "127.0.0.1"
-        },
-        requestId: executionId,
-        timeEpoch: Date.now()
-      }
-    };
-
-    // Запуск имитированного хендлера
-    let statusCode = 200;
-    let body = {};
-
-    if (path === '/api/items' && method === 'GET') {
-      statusCode = 200;
-      body = {
-        success: true,
-        message: "Список элементов успешно получен",
-        count: 3,
-        items: [
-          { id: 1, name: "Бессерверная функция A", status: "active" },
-          { id: 2, name: "Очередь сообщений SQS", status: "idle" },
-          { id: 3, name: "Хранилище S3 Bucket", status: "ready" }
-        ],
-        requestId: executionId
-      };
-    } else if (path === '/api/items' && method === 'POST') {
-      statusCode = 201;
-      body = {
-        success: true,
-        message: "Новая запись успешно создана в базе данных BaaS",
-        recordId: "item-" + Math.floor(Math.random() * 10000),
-        createdAt: timestamp,
-        requestId: executionId
-      };
-    } else {
-      statusCode = 404;
-      body = {
-        success: false,
-        error: "RouteNotFound",
-        message: `Маршрут ${method} ${path} не сконфигурирован в API Gateway`,
-        requestId: executionId
-      };
-    }
-
-    const duration = Math.floor(Math.random() * 25) + 8; // 8-33ms warm execution time
-
-    const simulatedResponse = {
-      statusCode: statusCode,
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "X-Execution-Duration-Ms": duration,
-        "X-Serverless-Engine": "V8-MicroVM"
-      },
-      body: body
-    };
-
-    outputBox.textContent = `// [INFO] Запуск функции ${executionId}...\n` +
-      `// [INFO] Время холодного старта: 0 мс (Warm instance reused)\n` +
-      `// [INFO] Время выполнения хендлера: ${duration} мс\n` +
-      `// [STATUS] HTTP ${statusCode}\n\n` +
-      JSON.stringify(simulatedResponse, null, 2);
-  });
-}
+  <script src="js/script.js"></script>
+</body>
+</html>

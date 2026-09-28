@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Преимущества и недостатки Serverless — честный анализ | Serverless</title>
-  <meta name="description" content="Честный технический анализ преимуществ и недостатков бессерверной архитектуры: холодный старт, лимиты выполнения, вендор-лок, масштабируемость и экономия.">
+  <title>Безопасность Serverless: защита API, IAM-права и мониторинг | Serverless</title>
+  <meta name="description" content="Полное руководство по безопасности бессерверных приложений: модель разделения ответственности, принцип наименьших привилегий IAM, защита API и хранение секретов.">
   <meta name="author" content="Ананьин Ефим Вадимович">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,10 +35,10 @@
             <li><a href="about.html" class="nav-link">О Serverless</a></li>
             <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
             <li><a href="platforms.html" class="nav-link">Платформы</a></li>
-            <li><a href="pros-cons.html" class="nav-link active">Плюсы и минусы</a></li>
+            <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
             <li><a href="use-cases.html" class="nav-link">Примеры</a></li>
             <li><a href="tutorial.html" class="nav-link">Практика</a></li>
-            <li><a href="security.html" class="nav-link">Безопасность</a></li>
+            <li><a href="security.html" class="nav-link active">Безопасность</a></li>
             <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
             <li><a href="glossary.html" class="nav-link">Словарь</a></li>
           </ul>
@@ -68,10 +68,10 @@
       <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
       <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
       <li><a href="platforms.html" class="mobile-nav-link">Облачные платформы</a></li>
-      <li><a href="pros-cons.html" class="mobile-nav-link active">Плюсы и минусы</a></li>
+      <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
       <li><a href="use-cases.html" class="mobile-nav-link">Примеры использования</a></li>
       <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
-      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
+      <li><a href="security.html" class="mobile-nav-link active">Безопасность и IAM</a></li>
       <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
       <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
     </ul>
@@ -80,181 +80,132 @@
   <!-- Контент страницы -->
   <div class="container main-wrapper">
     <header class="page-header-block">
-      <h1 class="page-title">Преимущества и недостатки Serverless</h1>
+      <h1 class="page-title">Безопасность бессерверных приложений</h1>
       <p class="page-lead">
-        Объективный взгляд на бессерверную модель: когда Serverless даёт десятикратную экономию и гибкость, а в каких сценариях может обернуться высокими расходами и сложностями в поддержке.
+        Распространённый миф гласит, что Serverless автоматически безопасен. На деле вектор атак смещается с сетевого уровня на уровень прав IAM, конфигураций шлюзов и зависимостей кода.
       </p>
     </header>
 
     <div class="row">
       <main class="column column-75">
 
-        <!-- 1. Преимущества -->
-        <section id="advantages" style="margin-bottom: 4rem;">
-          <h2>1. Ключевые преимущества</h2>
-          
-          <div class="card" style="border-left: 4px solid #10b981;">
-            <h4>Автоматическое эластичное масштабирование</h4>
-            <p>
-              Традиционный сервер требует настройки Auto Scaling Groups, прогрева новых виртуальных машин (что занимает 3–7 минут) и тонкой настройки метрик CPU. Бессерверная платформа масштабирует функции мгновенно: если в одну секунду поступило 10 000 запросов, провайдер параллельно запустит 10 000 экземпляров функции без участия администратора.
-            </p>
+        <!-- 1. Модель разделенной ответственности -->
+        <section id="shared-responsibility" style="margin-bottom: 4rem;">
+          <h2>1. Модель разделенной ответственности (Shared Responsibility Model)</h2>
+          <p>
+            В облачной архитектуре безопасность — это двусторонний контракт между провайдером и клиентом:
+          </p>
+          <div class="row">
+            <div class="column column-50">
+              <div class="card" style="border-left: 4px solid var(--accent-cyan);">
+                <h4>Ответственность провайдера (Cloud Security)</h4>
+                <ul>
+                  <li>Физическая безопасность дата-центров.</li>
+                  <li>Изоляция гипервизора и ядра ОС (Firecracker/gVisor).</li>
+                  <li>Патчинг уязвимостей операционной системы и рантайма.</li>
+                  <li>Защита сетевых магистралей от канального DDoS (L3/L4).</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column column-50">
+              <div class="card" style="border-left: 4px solid var(--accent-violet);">
+                <h4>Ответственность разработчика (App Security)</h4>
+                <ul>
+                  <li>Конфигурация политик доступа IAM.</li>
+                  <li>Валидация входящих данных и санитайзинг.</li>
+                  <li>Безопасное хранение API-ключей и паролей к базам.</li>
+                  <li>Аудит уязвимостей сторонних npm/pip пакетов.</li>
+                </ul>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div class="card" style="border-left: 4px solid #10b981;">
-            <h4>Оплата строго за фактические вызовы</h4>
-            <p>
-              Биллинг осуществляется с дискретностью до 1 миллисекунды. Если сервис простаивает ночью, в выходные или между рекламными кампаниями — компания не платит ни копейки за неиспользуемый процессор и оперативную память.
-            </p>
-          </div>
-
-          <div class="card" style="border-left: 4px solid #10b981;">
-            <h4>Полное отсутствие рутины администрирования серверов</h4>
-            <p>
-              Команда освобождается от необходимости обновлять пакеты в Ubuntu/CentOS, отслеживать уязвимости в OpenSSL, настраивать демоны systemd и следить за заполнением дискового пространства логами.
-            </p>
-          </div>
-
-          <div class="card" style="border-left: 4px solid #10b981;">
-            <h4>Встроенная отказоустойчивость (High Availability)</h4>
-            <p>
-              Облачные провайдеры по умолчанию распределяют выполнение функций между несколькими изолированными зонами доступности (Availability Zones) внутри одного географического региона. Сбой одного дата-центра не прерывает работу сервиса.
+        <!-- 2. Управление доступом и правами (IAM) -->
+        <section id="iam" style="margin-bottom: 4rem;">
+          <h2>2. Управление доступом и правами (IAM)</h2>
+          <p>
+            Главное правило бессерверной безопасности: <strong>Принцип наименьших привилегий (Principle of Least Privilege)</strong>.
+          </p>
+          <p>
+            Типичная грубая ошибка новичков — привязать к функции административную роль (<code>AdministratorAccess</code> или <code>*:*</code>). Если злоумышленник внедрит инъекцию в функцию, он получит полный контроль над всем облачным аккаунтом компании.
+          </p>
+          <div class="card">
+            <h4>Золотое правило настройки ролей:</h4>
+            <p style="margin-bottom: 0;">
+              Каждая функция должна иметь собственную выделенную роль IAM. Если функция генерации превью изображений только читает из бакета <code>raw-uploads</code> и пишет в <code>processed-thumbs</code>, у неё <strong>не должно быть</strong> прав на удаление файлов или чтение базы данных пользователей.
             </p>
           </div>
         </section>
 
-        <!-- 2. Недостатки и ограничения -->
-        <section id="disadvantages" style="margin-bottom: 4rem;">
-          <h2>2. Недостатки и технические ограничения</h2>
-
-          <div class="card" style="border-left: 4px solid #ef4444;">
-            <h4>Холодный старт (Cold Start)</h4>
-            <p>
-              Если функция долго не вызывалась, облачная платформа уничтожает её контейнер. При поступлении нового запроса системе требуется время: выделить MicroVM, загрузить пакет кода и запустить среду (например, рантайм Java или Python). Это добавляет от 150 мс до 1–2 секунд к первому ответу.
-            </p>
-            <p><strong>Способы решения:</strong> использование легковесных сред (Node.js, Go, Rust), механизм <em>Provisioned Concurrency</em> (предварительно прогретые экземпляры) или периодический ping-триггер (warm-up plugin).
-            </p>
-          </div>
-
-          <div class="card" style="border-left: 4px solid #ef4444;">
-            <h4>Лимиты времени выполнения (Execution Timeouts)</h4>
-            <p>
-              Бессерверная функция не предназначена для долгоиграющих процессов. Например, лимит AWS Lambda составляет 15 минут, а Cloudflare Workers — от 30 секунд. Задачи машинного обучения, рендеринг видео или сложная аналитика Big Data требуют использования контейнеров (ECS, Kubernetes) или фоновых воркеров.
-            </p>
-          </div>
-
-          <div class="card" style="border-left: 4px solid #ef4444;">
-            <h4>Привязка к облачному вендору (Vendor Lock-in)</h4>
-            <p>
-              Каждый облачный провайдер использует собственный формат событий (Event schema), уникальную структуру контекста и фирменные библиотеки SDK. Перенести проект с AWS Lambda на Google Cloud Functions сложнее, чем просто переместить Docker-контейнер.
-            </p>
-            <p><strong>Способы решения:</strong> применение абстракций (Serverless Framework, AWS SAM, Terraform) и проектирование кода по принципам чистой архитектуры (Hexagonal Architecture / Ports &amp; Adapters).
-            </p>
-          </div>
-
-          <div class="card" style="border-left: 4px solid #ef4444;">
-            <h4>Экономическая неэффективность при постоянной 100% нагрузке</h4>
-            <p>
-              Если ваш сервис генерирует непрерывный поток в 100 000 RPS 24 часа в сутки 365 дней в году, аренда выделенного сервера или кластера Kubernetes обойдётся существенно дешевле, чем поминутная оплата FaaS вызовов.
-            </p>
-          </div>
+        <!-- 3. Защита API Gateway -->
+        <section id="api-security" style="margin-bottom: 4rem;">
+          <h2>3. Защита периметра API Gateway</h2>
+          <p>Шлюз API является первой линией обороны. На уровне шлюза реализуются следующие механизмы:</p>
+          <ul>
+            <li><strong>Web Application Firewall (WAF):</strong> Фильтрация ботнетов, SQL-инъекций и вредоносных IP-адресов до того, как они достигнут кода.</li>
+            <li><strong>Rate Limiting &amp; Throttling:</strong> Ограничение числа запросов (например, не более 50 req/sec с одного IP) для предотвращения DoS-атак.</li>
+            <li><strong>Валидация схемы JSON Schema:</strong> Шлюз отбрасывает запросы с некорректным телом до запуска функции, экономя время CPU и средства.</li>
+            <li><strong>JWT Authorizers:</strong> Проверка подписи токена авторизации силами шлюза без выполнения кастомного кода.</li>
+          </ul>
         </section>
 
-        <!-- 3. Сводная таблица -->
-        <section id="summary-table" style="margin-bottom: 4rem;">
-          <h2>3. Сводное сравнение сильных и слабых сторон</h2>
-          
-          <div class="table-responsive">
-            <table>
-              <caption>Сводный анализ характеристик бессерверного подхода</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Критерий оценки</th>
-                  <th scope="col">Оценка в Serverless</th>
-                  <th scope="col">Техническое объяснение</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Скорость масштабирования</th>
-                  <td><span class="table-tag tag-success">Отлично</span></td>
-                  <td>Мгновенное развёртывание сотен копий за доли секунды.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Стоимость при низком трафике</th>
-                  <td><span class="table-tag tag-success">Превосходно</span></td>
-                  <td>Плата равна нулю при отсутствии вызовов (Scale to Zero).</td>
-                </tr>
-                <tr>
-                  <th scope="row">Сложность сопровождения ОС</th>
-                  <td><span class="table-tag tag-success">Минимальная</span></td>
-                  <td>Патчинг и поддержание инфраструктуры делегированы вендору.</td>
-                </tr>
-                <tr>
-                  <th scope="row">Предсказуемость latency</th>
-                  <td><span class="table-tag tag-warning">Удовлетворительно</span></td>
-                  <td>Периодические всплески задержки из-за «холодного старта».</td>
-                </tr>
-                <tr>
-                  <th scope="row">Длительные вычисления</th>
-                  <td><span class="table-tag tag-warning">Ограничено</span></td>
-                  <td>Жёсткий лимит по таймауту (до 15 минут).</td>
-                </tr>
-                <tr>
-                  <th scope="row">Локальная разработка и тест</th>
-                  <td><span class="table-tag tag-warning">Требует эмуляторов</span></td>
-                  <td>Необходимы локальные эмуляторы шлюзов и баз данных (LocalStack).</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+        <!-- 4. Безопасное хранение секретов -->
+        <section id="secrets" style="margin-bottom: 4rem;">
+          <h2>4. Хранение секретов и переменных окружения</h2>
+          <p>
+            Ни в коем случае не коммитьте пароли от баз данных, приватные ключи и API-токены в Git-репозиторий!
+          </p>
+          <p>
+            В Serverless для безопасного хранения используются специализированные хранилища секретов:
+          </p>
+          <ul>
+            <li><strong>AWS Secrets Manager / AWS Systems Manager Parameter Store:</strong> Шифрование ключами KMS, автоматическая ротация паролей и версионирование.</li>
+            <li><strong>Yandex Lockbox:</strong> Надежное централизованное хранилище конфиденциальных данных в Yandex Cloud.</li>
+            <li><strong>Переменные окружения среды (Environment Variables):</strong> Передаются в зашифрованном виде при развёртывании и считываются процессом во время холодного старта.</li>
+          </ul>
         </section>
 
-        <!-- 4. Интерактивный FAQ (Аккордеон) -->
-        <section id="faq" style="margin-bottom: 4rem;">
-          <h2>4. Часто задаваемые вопросы (FAQ)</h2>
-          <p>Нажмите на вопрос, чтобы открыть развёрнутый технический ответ:</p>
+        <!-- 5. Защита от злоупотреблений и Denial of Wallet -->
+        <section id="denial-of-wallet" style="margin-bottom: 4rem;">
+          <h2>5. Защита от «Denial of Wallet» (Отказ кошелька)</h2>
+          <p>
+            Так как FaaS эластично масштабируется до тысяч экземпляров, атака перегрузки (Flood) может привести не к падению сервера, а к гигантскому денежному счёту.
+          </p>
+          <p>Меры противодействия:</p>
+          <ol style="padding-left: 2rem;">
+            <li><strong>Установка лимитов одновременных выполнений (Concurrency Limits):</strong> Ограничьте предел функции (например, не более 200 одновременных вызовов).</li>
+            <li><strong>Бюджетные алерты (CloudWatch Alarms / Cost Alerts):</strong> Настройка автоматического SMS/Email оповещения при превышении дневного бюджета (например, $10/день).</li>
+            <li><strong>Использование Captcha (Cloudflare Turnstile):</strong> Защита открытых публичных форм от спам-ботов.</li>
+          </ol>
+        </section>
 
-          <div class="accordion-group">
-            <div class="accordion-item">
-              <button class="accordion-header" type="button">
-                <span>Как на практике победить «холодный старт» в продакшене?</span>
-                <span class="accordion-icon">▼</span>
-              </button>
-              <div class="accordion-body">
-                Для борьбы с холодным стартом применяются три метода: 1) Включение опции <em>Provisioned Concurrency</em> на критических маршрутах, которая держит заданное число экземпляров постоянно тёплыми; 2) Переход на легковесные языки (Node.js, Go или Rust инициализируются за 10–25 мс, в то время как JVM требует от 500 мс); 3) Оптимизация размера бандла (Tree-shaking, удаление неиспользуемых npm-пакетов).
-              </div>
-            </div>
+        <!-- 6. Логирование и мониторинг -->
+        <section id="monitoring" style="margin-bottom: 4rem;">
+          <h2>6. Распределенный трейсинг и аудит</h2>
+          <p>
+            В монолите все логи пишутся в один файл на диске. В бессерверной системе 10 000 функций пишут логи в реальном времени из изолированных контейнеров.
+          </p>
+          <p>
+            Для расследования инцидентов применяются системы распределённого трейсинга:
+          </p>
+          <ul>
+            <li><strong>AWS X-Ray / OpenTelemetry:</strong> Каждому входящему HTTP-запросу присваивается сквозной <code>trace-id</code>, который передаётся по цепочке через шлюз, функцию, очередь и базу данных. Это позволяет точно видеть, на каком шаге возникла задержка или ошибка.</li>
+            <li><strong>Структурированное логирование (JSON Logging):</strong> Вывод логов в формате JSON (уровень <code>INFO/ERROR</code>, <code>userId</code>, <code>executionDuration</code>) для мгновенного поиска в CloudWatch Logs Insights.</li>
+          </ul>
+        </section>
 
-            <div class="accordion-item">
-              <button class="accordion-header" type="button">
-                <span>Правда ли, что Serverless всегда дешевле традиционных серверов?</span>
-                <span class="accordion-icon">▼</span>
-              </button>
-              <div class="accordion-body">
-                Нет, не всегда. Serverless значительно выгоднее при волнообразном, непредсказуемом или невысоком трафике (стартапы, внутренние корпоративные порталы, фоновые обработчики, cron-задачи). Но если нагрузка равномерная, высокая и предсказуемая 24/7, расходы на FaaS могут превысить стоимость аренды выделенных виртуальных серверов.
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header" type="button">
-                <span>Как защитить проект от вендор-лока (Vendor Lock-in)?</span>
-                <span class="accordion-icon">▼</span>
-              </button>
-              <div class="accordion-body">
-                Разделяйте бизнес-логику и код адаптера облака. Вся чистая логика приложения должна находиться в стандартных JavaScript/Python модулях, не зависящих от SDK конкретного провайдера. Входной обработчик (Handler) должен лишь извлекать параметры из события и передавать их чистой функции. Для описания инфраструктуры используйте открытые инструменты, такие как Terraform или Serverless Framework.
-              </div>
-            </div>
-
-            <div class="accordion-item">
-              <button class="accordion-header" type="button">
-                <span>Что такое «Denial of Wallet» (Отказ кошелька)?</span>
-                <span class="accordion-icon">▼</span>
-              </button>
-              <div class="accordion-body">
-                В отличие от традиционного DDoS, когда сервер «падает» от перегрузки, Serverless-система послушно смасштабируется до сотен тысяч функций. В результате сервис останется доступным, но владельцу придёт астрономический счёт от облака. Для предотвращения этого на уровне API Gateway настраивают лимиты (Throttling / WAF) и устанавливают бюджетные алерты (Budget Alerts) с лимитом отсечки.
-              </div>
-            </div>
-          </div>
+        <!-- Чек-лист практических рекомендаций -->
+        <section id="checklist" class="card" style="border: 2px solid var(--accent-cyan); background-color: var(--bg-surface-elevated);">
+          <h3>Чек-лист разработчика по безопасности Serverless</h3>
+          <ul style="list-style-type: none; padding-left: 0;">
+            <li style="margin-bottom: 1rem;">✅ <strong>Гранулярные IAM-роли:</strong> Каждая функция имеет доступ только к своим ресурсам.</li>
+            <li style="margin-bottom: 1rem;">✅ <strong>Секреты вынесены:</strong> В репозитории нет паролей, ключей API и секретов.</li>
+            <li style="margin-bottom: 1rem;">✅ <strong>WAF и Rate Limiting:</strong> Шлюз защищён от флуда и автоматических сканеров.</li>
+            <li style="margin-bottom: 1rem;">✅ <strong>Валидация входа:</strong> Тело каждого запроса строго валидируется по схеме.</li>
+            <li style="margin-bottom: 1rem;">✅ <strong>Лимиты Concurrency:</strong> Настроен потолок параллельных выполнений и бюджетные алерты.</li>
+            <li style="margin-bottom: 0;">✅ <strong>Аудит зависимостей:</strong> Регулярный запуск <code>npm audit</code> или Snyk для выявления уязвимостей в библиотеках.</li>
+          </ul>
         </section>
 
       </main>
@@ -279,8 +230,8 @@
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
             Следующий шаг
           </h3>
-          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Посмотрите 7 реальных сценариев применения бессерверных технологий.</p>
-          <a href="use-cases.html" class="button button-outline" style="width: 100%;">Примеры использования →</a>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Сравните монолит, микросервисы и бессерверную модель в большой таблице.</p>
+          <a href="comparison.html" class="button button-outline" style="width: 100%;">Сравнение архитектур →</a>
         </div>
       </aside>
     </div>
@@ -324,9 +275,9 @@
           <h4 class="footer-col-title">Материалы</h4>
           <ul class="footer-links">
             <li><a href="use-cases.html">Примеры использования</a></li>
-            <li><a href="tutorial.html">Практика написания кода</a></li>
+            <li><a href="tutorial.html">Практика и код</a></li>
             <li><a href="security.html">Безопасность систем</a></li>
-            <li><a href="comparison.html">Сравнение архитектур</a></li>
+            <li><a href="glossary.html">Словарь терминов</a></li>
           </ul>
         </div>
       </div>
