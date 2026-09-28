@@ -1,261 +1,201 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Примеры использования Serverless — 7 реальных сценариев | Serverless</title>
-  <meta name="description" content="7 практических сценариев применения бессерверных технологий: обработка изображений, чат-боты, REST API, стриминг данных, cron-задачи, IoT и рассылка уведомлений.">
-  <meta name="author" content="Ананьин Ефим Вадимович">
+# Serverless — Образовательный веб-проект
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+## Сведения о проекте
 
-  <!-- Favicon: официальная иконка Milligram CSS -->
-  <link rel="icon" type="image/svg+xml" href="images/milligram-logo.svg">
+* **Название проекта:** Serverless
+* **Студент:** Ананьин Ефим Вадимович (группа 835)
+* **Тема:** № 34 — Бессерверная архитектура (Serverless)
+* **CSS-фреймворк:** Milligram (№ 7)
+* **Ссылка на GitHub Pages:** https://kdfley-muzhik.github.io/serverless-hub/
+* **Ссылка на репозиторий GitHub:** https://github.com/kdfley-muzhik/serverless-hub
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+---
 
-  <!-- Шапка сайта -->
-  <header class="site-header">
-    <div class="container">
-      <div class="header-inner">
-        <a href="index.html" class="brand-wrapper" aria-label="Serverless Главная">
-          <img src="images/logo.svg" alt="Логотип Serverless" class="brand-logo" width="38" height="38">
-          <span class="brand-name">Serverless</span>
-        </a>
+## 1. Описание проекта
 
-        <nav class="site-nav" aria-label="Основная навигация">
-          <ul>
-            <li><a href="index.html" class="nav-link">Главная</a></li>
-            <li><a href="about.html" class="nav-link">О Serverless</a></li>
-            <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
-            <li><a href="platforms.html" class="nav-link">Платформы</a></li>
-            <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
-            <li><a href="use-cases.html" class="nav-link active">Примеры</a></li>
-            <li><a href="tutorial.html" class="nav-link">Практика</a></li>
-            <li><a href="security.html" class="nav-link">Безопасность</a></li>
-            <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
-            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
-          </ul>
-        </nav>
+**Serverless Hub** — это современный многостраничный образовательный веб-портал, посвящённый изучению бессерверной архитектуры (Serverless computing), принципов Function as a Service (FaaS) и Backend as a Service (BaaS), ведущих облачных платформ, вопросам безопасности и практической разработке облачных функций.
 
-                <div class="header-actions">
-          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="Переключить тему оформления" aria-label="Переключить тему">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          </button>
-          <button id="burger-btn" class="burger-btn" type="button" title="Открыть мобильное меню" aria-label="Открыть мобильное меню">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
+Проект разработан в рамках учебной дисциплины «Использование CSS-фреймворков». В качестве основного стилевого фундамента используется минималистичный CSS-фреймворк **Milligram** (v1.4.1, [milligram.io](https://milligram.io/)). Дизайн портала аутентично следует фирменному стилю Milligram:
+* Фирменный пурпурный акцент Milligram Purple (`#9b4dca`), тёмный ховер (`#606c76`);
+* Каноническая типографика **Roboto** (веса 300, 400, 700) и JetBrains Mono для кода;
+* Светлый вторичный фон `#f4f5f6` для карточек, таблиц и блоков кода;
+* Официальная иконка фреймворка Milligram (лабораторная мерная колба / beaker) в шапке, hero-секции и подвале;
+* Поддержка переключения светлой и тёмной тем оформления с сохранением состояния.
 
-  <!-- Мобильное меню -->
-  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
-  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Мобильное меню">
-    <div class="mobile-nav-header">
-      <span class="brand-name">Serverless</span>
-      <button id="mobile-nav-close" class="button-clear" type="button" aria-label="Закрыть меню" style="font-size: 2.4rem; padding: 0;">✕</button>
-    </div>
-    <ul class="mobile-nav-list">
-      <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
-      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
-      <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
-      <li><a href="platforms.html" class="mobile-nav-link">Облачные платформы</a></li>
-      <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
-      <li><a href="use-cases.html" class="mobile-nav-link active">Примеры использования</a></li>
-      <li><a href="tutorial.html" class="mobile-nav-link">Практический урок</a></li>
-      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
-      <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
-      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
-    </ul>
-  </aside>
+---
 
-  <!-- Контент страницы -->
-  <div class="container main-wrapper">
-    <header class="page-header-block">
-      <h1 class="page-title">Примеры использования Serverless</h1>
-      <p class="page-lead">
-        Где бессерверный стек раскрывает свои возможности на максимум: разбор 7 типовых индустриальных сценариев с архитектурными потоками и описанием бизнес-выгоды.
-      </p>
-    </header>
+## 2. Структура страниц сайта (10 связанных страниц)
 
-    <div class="row">
-      <main class="column column-75">
+1. **`index.html` — Главная страница («Serverless Hub — разработка без серверов»):**
+   * Большой презентационный hero-блок со статистикой и кнопками призыва к действию.
+   * Концептуальное введение в технологию бессерверных вычислений.
+   * Информационные карточки ключевых преимуществ.
+   * Интерактивная карта направлений обучения на портале.
+   * Схема 4-этапного цикла работы Serverless-приложения.
+   * Архитектурная схема взаимодействия компонентов.
+2. **`about.html` — Что такое Serverless:**
+   * Определение бессерверных вычислений и фундаментальные принципы (Stateless, Event-driven, Ephemeral, Scale-to-Zero).
+   * Историческая эволюция от физических серверов On-Premise к IaaS, PaaS и FaaS.
+   * Инфографика сопоставления традиционных серверов и FaaS.
+   * Математика и принципы модели оплаты Pay-as-you-go с посекундной тарификацией.
+3. **`architecture.html` — Архитектура Serverless:**
+   * Детальное устройство компонентов FaaS (MicroVM Firecracker, V8 Isolates) и BaaS.
+   * Роль, функции и возможности API Gateway (маршрутизация, троттлинг, валидация JSON Schema).
+   * Особенности баз данных в бессерверной среде (DynamoDB, YDB, Neon Postgres).
+   * Событийно-ориентированная архитектура (Event-Driven Architecture) и шины сообщений.
+   * Подробная схема жизненного цикла HTTP-запроса с разбором холодного и тёплого старта.
+4. **`platforms.html` — Облачные платформы:**
+   * Интерактивный каталог платформ с вкладками: AWS Lambda, Microsoft Azure Functions, Google Cloud Functions, Cloudflare Workers, Yandex Cloud Functions.
+   * Технические параметры, лимиты памяти, таймауты и поддерживаемые рантаймы.
+   * Семантическая таблица сравнения платформ со ссылками на официальную документацию.
+5. **`pros-cons.html` — Преимущества и недостатки:**
+   * Анализ достоинств: мгновенная эластичность, нулевая стоимость простоя, отсутствие рутины администрирования ОС.
+   * Анализ ограничений: физика холодного старта, таймауты выполнения, вендор-лок, риски «Denial of Wallet».
+   * Сводная оценочная таблица характеристик.
+   * Интерактивный аккордеон с ответами на частые вопросы (FAQ).
+6. **`use-cases.html` — Примеры использования:**
+   * Разбор 7 реальных индустриальных сценариев:
+     1. Асинхронная обработка медиа и генерация превью изображений.
+     2. Чат-боты и обработка входящих Webhook-событий.
+     3. Бессерверные REST API и CRUD-микросервисы.
+     4. Потоковая обработка данных, кликстрима и логов (ETL).
+     5. Периодические задачи и автоматизация по расписанию (Cron).
+     6. Интернет вещей (IoT) и телеметрия умных сенсоров.
+     7. Массовая отправка транзакционных email и push-уведомлений.
+7. **`tutorial.html` — Практика (Практический урок):**
+   * Разработка микросервиса на JavaScript (Node.js) без обязательной регистрации в облаке.
+   * Пошаговый разбор структуры функции-хендлера (`handler.js`).
+   * Анализ объектов входного события (`event.json`) и выходного HTTP-ответа (`response.json`).
+   * Кнопки копирования исходного кода в буфер обмена.
+   * Встроенный интерактивный симулятор выполнения бессерверной функции в браузере.
+8. **`security.html` — Безопасность бессерверных систем:**
+   * Модель разделения ответственности (Shared Responsibility Model).
+   * Управление доступом и принцип наименьших привилегий в политиках IAM.
+   * Защита периметра API Gateway (WAF, Rate Limiting, CORS, JWT-авторизация).
+   * Безопасное хранение секретов (AWS Secrets Manager, Yandex Lockbox).
+   * Предотвращение «Denial of Wallet» и распределённый трейсинг (OpenTelemetry/X-Ray).
+   * Практический чек-лист безопасности разработчика.
+9. **`comparison.html` — Сравнение архитектур:**
+   * Глубокое сопоставление Монолита, Контейнерных микросервисов (Docker/Kubernetes) и Serverless.
+   * Полная семантическая HTML-таблица (`<table>`, `<caption>`, `<thead>`, `<tbody>`, `<th scope="col">`, `<th scope="row">`).
+   * Инженерные рекомендации: критерии выбора архитектуры для различных типов бизнеса.
+10. **`glossary.html` — Словарь терминов и ресурсы:**
+    * Интерактивный глоссарий из 14 ключевых терминов (FaaS, BaaS, API Gateway, Cold Start, Concurrency, MicroVM и др.).
+    * Живой поиск и фильтрация терминов в реальном времени с индикатором количества результатов.
+    * Каталог ссылок на официальные спецификации (CNCF CloudEvents, Serverless Framework, Firecracker).
+    * Встроенный адаптивный видеоплеер с лекцией по основам Serverless (Антон Черепанов. Serverless Architecture and AWS: https://yandex.ru/video/preview/267301312799122543).
 
-        <!-- Сценарий 1: Обработка изображений -->
-        <article id="image-processing" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-          </div>
-          <h3>1. Асинхронная обработка изображений и медиа</h3>
-          <p><strong>Задача:</strong> Пользователи маркетплейса загружают фотографии товаров в высоком разрешении. Требуется сжать их в формат WebP, сгенерировать 3 размера миниатюр (thumbnails) и наложить водяной знак без замедления загрузки основного сайта.</p>
-          <p><strong>Принцип работы:</strong></p>
-          <ol style="padding-left: 2rem;">
-            <li>Фронтенд загружает оригинал напрямую в S3 Bucket по временной подписанной ссылке (Pre-signed URL).</li>
-            <li>S3 генерирует событие <code>ObjectCreated</code> и триггерит бессерверную функцию-обработчик (Image Handler).</li>
-            <li>Функция сжимает файл с помощью библиотеки Sharp/Pillow, сохраняет миниатюры в целевую папку и записывает метаданные в базу данных.</li>
-          </ol>
-          <p><strong>Преимущества Serverless:</strong> Загрузка 10 000 фото за минуту не обрушит сайт — облако мгновенно запустит тысячи параллельных функций, которые отработают за секунды и выключатся.</p>
-        </article>
+---
 
-        <!-- Сценарий 2: Чат-боты и вебхуки -->
-        <article id="chatbots" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-          </div>
-          <h3>2. Чат-боты и обработка Webhook-событий</h3>
-          <p><strong>Задача:</strong> Бот технической поддержки в Telegram, Slack или VK получает сообщения от пользователей и отправляет уведомления о статусе заказов.</p>
-          <p><strong>Принцип работы:</strong></p>
-          <ol style="padding-left: 2rem;">
-            <li>Мессенджер отправляет HTTP POST-запрос на эндпоинт API Gateway.</li>
-            <li>Шлюз перенаправляет полезную нагрузку в микрофункцию Bot Handler.</li>
-            <li>Функция обрабатывает текст сообщения, обращается к LLM/AI модели или базе данных и посылает ответ клиенту через Bot API.</li>
-          </ol>
-          <p><strong>Преимущества Serverless:</strong> Боты часто простаивают (ночью или в перерывах). Владельцу не нужно арендовать VPS за $15 в месяц — бот активен только в миллисекунды ответа, расходуя копейки из бесплатного тарифа.</p>
-        </article>
+## 3. Используемые технологии
 
-        <!-- Сценарий 3: REST API и микросервисы -->
-        <article id="rest-api" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"></path><path d="M8 6l-6 6 6 6"></path></svg>
-          </div>
-          <h3>3. Бессерверные REST API и CRUD-микросервисы</h3>
-          <p><strong>Задача:</strong> Бэкенд для мобильного приложения или SPA (Single Page Application) с операциями чтения и записи товаров, корзины и профиля пользователя.</p>
-          <p><strong>Принцип работы:</strong> API Gateway сопоставляет маршруты (например, <code>GET /orders</code>, <code>POST /checkout</code>) с отдельными FaaS функциями. Функции изолированы: сбой в обработчике отзывов никак не повлияет на обработку платежей.</p>
-          <p><strong>Преимущества Serverless:</strong> Полная независимость деплоя: разработчики могут обновлять одну функцию без риска сломать весь монолит.</p>
-        </article>
+* **HTML5:** строгая семантическая разметка (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`, `<table>`, `<caption>`, `<thead>`, `<tbody>`, `<th scope="...">`, `<figure>`, `<figcaption>`).
+* **CSS3:** адаптивная вёрстка (Mobile First), поддержка CSS Custom Properties для динамического переключения тем, плавные переходы и тени.
+* **Milligram CSS (v1.4.1):** официальный CSS-фреймворк № 7 ([milligram.io](https://milligram.io/)), сетка `.container`, `.row`, `.column`, кнопки `.button`, `.button-outline`, `.button-clear`, формы, типографика, официальная иконка (мерная колба).
+* **Normalize.css (v8.0.1):** сброс и нормализация браузерных стилей.
+* **Google Fonts:** фирменный шрифт Milligram — **Roboto** (веса 300, 400, 700) и JetBrains Mono (код и формулы).
+* **Графика и оптимизация для Web (WebP, PNG, JPEG, SVG):** все иллюстрации и схемы оптимизированы для web со сжатием без потери качества; используются современные форматы WebP (сжатие 45–67 КБ) с фоллбэком на PNG через тег `<picture>`, растровые версии JPEG, а также векторные SVG для иконок и логотипов.
+* **Vanilla JavaScript (без сторонних библиотек):**
+  * Переключатель светлой и тёмной темы с сохранением состояния в `localStorage`.
+  * Мобильное бургер-меню с плавным выдвижным drawer-эффектом и оверлеем.
+  * Автоматическая подсветка активного пункта навигации.
+  * Плавная кнопка возврата наверх («Back to Top») с отслеживанием позиции скролла.
+  * Аккордеоны для блоков FAQ.
+  * Форма подписки на дайджест с клиентской регулярной валидацией email и сообщениями обратной связи.
+  * Живой поиск по словарю терминов.
+  * Интерактивные вкладки на странице платформ.
+  * Кнопки копирования фрагментов кода с уведомлением в буфер обмена.
+  * Браузерный эмулятор выполнения бессерверной функции.
 
-        <!-- Сценарий 4: Обработка событий и потоков данных -->
-        <article id="event-streams" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-          </div>
-          <h3>4. Потоковая обработка данных и логов (ETL)</h3>
-          <p><strong>Задача:</strong> Фильтрация и очистка потока кликов пользователей (Clickstream) или логов безопасности с сотен веб-серверов в реальном времени перед сохранением в хранилище данных (Data Lake).</p>
-          <p><strong>Принцип работы:</strong> Поток сообщений поступает в Kinesis/Kafka. Бессерверная функция считывает пачки записей (batches), валидирует их, анонимизирует персональные данные и складирует в аналитическую СУБД (ClickHouse / BigQuery).</p>
-          <p><strong>Преимущества Serverless:</strong> Автоматическое масштабирование под скорость поступления данных без необходимости вручную добавлять воркеры в кластер.</p>
-        </article>
+---
 
-        <!-- Сценарий 5: Автоматизация задач и cron-джобы -->
-        <article id="cron-tasks" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          </div>
-          <h3>5. Периодические задачи по расписанию (Cron Jobs)</h3>
-          <p><strong>Задача:</strong> Ежедневное создание резервных копий базы данных в 03:00 ночи, генерация финансовых отчетов бухгалтерии каждое первое число месяца и очистка устаревших сессий.</p>
-          <p><strong>Принцип работы:</strong> Облачный таймер (AWS EventBridge Scheduler, Cloud Scheduler) по cron-расписанию отправляет триггер-событие на запуск функции. Функция выполняет сценарий и завершает работу.</p>
-          <p><strong>Преимущества Serverless:</strong> Раньше для cron-задач приходилось держать выделенный Linux-сервер включенным 24/7. В Serverless функция выполняется ровно 40 секунд раз в сутки, экономя 99.9% расходов.</p>
-        </article>
+## 4. Структура проекта
 
-        <!-- Сценарий 6: Работа с IoT -->
-        <article id="iot" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
-          </div>
-          <h3>6. Интернет вещей (IoT) и телеметрия датчиков</h3>
-          <p><strong>Задача:</strong> Сеть из 50 000 умных счетчиков электроэнергии или погодных станций каждые 5 минут передаёт показания сенсоров по протоколу MQTT.</p>
-          <p><strong>Принцип работы:</strong> Облачный IoT Core брокер принимает MQTT пакеты, фильтрует аномалии и вызывает микрофункции для записи данных в базу временных рядов (Time-series DB). При обнаружении критических показателей (перегрев) мгновенно запускается алерт.</p>
-          <p><strong>Преимущества Serverless:</strong> Высокая устойчивость к неравномерным всплескам сетевых пакетов от тысяч распределенных устройств.</p>
-        </article>
+```text
+serverless-hub/
+│
+├── index.html                  # Главная страница
+├── about.html                  # Что такое Serverless
+├── architecture.html           # Архитектура бессерверных систем
+├── platforms.html              # Облачные платформы
+├── pros-cons.html              # Преимущества и недостатки
+├── use-cases.html              # 7 сценариев использования
+├── tutorial.html               # Практический воркшоп
+├── security.html               # Безопасность и IAM
+├── comparison.html             # Сравнение архитектурных подходов
+├── glossary.html               # Глоссарий терминов, ссылки и видео
+│
+├── css/
+│   └── style.css               # Стили проекта и надстройки над Milligram
+│
+├── js/
+│   └── script.js               # Скрипт интерактивности (темы, меню, табы, поиск)
+│
+├── images/
+│   ├── logo.svg                # Фирменный векторный логотип Serverless Hub
+│   ├── hero-serverless.svg     # Иллюстрация бессерверного потока в hero-блоке
+│   ├── traditional-vs-serverless.svg # Инфографика сравнения серверов и FaaS
+│   ├── architecture-diagram.svg# Детальная архитектурная схема систем
+│   └── request-lifecycle.svg   # Схема жизненного цикла запроса и Cold Start
+│
+├── read.md                     # Краткая карточка проекта для сдачи
+├── README.md                   # Полная документация проекта
+└── .gitignore                  # Исключения версионирования Git
+```
 
-        <!-- Сценарий 7: Отправка уведомлений -->
-        <article id="notifications" class="card" style="margin-bottom: 3.5rem;">
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          </div>
-          <h3>7. Массовая и транзакционная отправка уведомлений</h3>
-          <p><strong>Задача:</strong> Отправка email с кодом подтверждения входа, SMS с паролем или push-уведомлений в мобильное приложение при совершении банковского перевода.</p>
-          <p><strong>Принцип работы:</strong> Основная система отправляет сообщение в очередь SQS. Бессерверный воркер слушает очередь, форматирует HTML-шаблон письма и вызывает сторонний почтовый шлюз (SES/SendGrid). Если сторонний сервис временно недоступен, сообщение автоматически возвращается в очередь для повторной попытки (Retry logic &amp; Dead Letter Queue).</p>
-          <p><strong>Преимущества Serverless:</strong> Изоляция почтового сервиса от бизнес-процессов магазина: задержка стороннего API почты не блокирует оформление заказа пользователем.</p>
-        </article>
+---
 
-      </main>
+## 5. Инструкция по локальному запуску
 
-      <!-- Сайдбар -->
-      <aside class="column column-25 site-aside">
-        <div class="aside-widget">
-          <h3 class="widget-title">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-            Обратная связь
-          </h3>
-          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Есть вопрос или отзыв по учебному проекту? Напишите автору:</p>
-          <form class="subscribe-form" novalidate>
-            <input type="email" placeholder="Ваш email" required aria-label="Email для связи">
-            <button type="submit" class="button" style="width: 100%;">Отправить</button>
-            <div class="subscribe-feedback" role="alert"></div>
-          </form>
-        </div>
+Проект является полностью статическим, не требует установки Node.js, компиляции или сборки.
 
-        <div class="aside-widget">
-          <h3 class="widget-title">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            Практика
-          </h3>
-          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Напишите свою первую бессерверную функцию прямо сейчас.</p>
-          <a href="tutorial.html" class="button button-outline" style="width: 100%;">Перейти к практике →</a>
-        </div>
-      </aside>
-    </div>
-  </div>
+### Вариант 1. Прямое открытие в браузере:
+1. Распакуйте архив `serverless-hub.zip` (или перейдите в папку `serverless-hub`).
+2. Дважды кликните по файлу `index.html` или откройте его через любой современный браузер (Google Chrome, Яндекс.Браузер, Mozilla Firefox, Microsoft Edge, Safari).
 
-  <!-- Кнопка возврата наверх -->
-  <button id="back-to-top" class="back-to-top" type="button" title="Вернуться к началу страницы" aria-label="Наверх">
-    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="12" y1="19" x2="12" y2="5"></line>
-      <polyline points="5 12 12 5 19 12"></polyline>
-    </svg>
-  </button>
+### Вариант 2. Запуск через локальный веб-сервер (рекомендуется):
+Если на компьютере установлен Python:
+```bash
+cd serverless-hub
+python -m http.server 8000
+```
+Затем откройте в браузере адрес: [http://localhost:8000](http://localhost:8000)
 
-  <!-- Подвал сайта -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="row">
-        <div class="column column-40">
-          <h4 class="footer-col-title">Serverless</h4>
-          <p>Учебный проект по дисциплине «Использование CSS-фреймворков». Разработан с использованием Milligram CSS.</p>
-          <p style="font-size: 1.3rem;">
-            <strong>Студент:</strong> Ананьин Ефим Вадимович<br>
-            <strong>Тема № 34:</strong> Бессерверная архитектура (Serverless)<br>
-            <span class="footer-framework-tag">
-              <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
-              <strong>CSS-фреймворк:</strong> <a href="https://milligram.io" target="_blank" rel="noopener">Milligram.io</a> (v1.4.1)
-            </span>
-          </p>
-        </div>
-        <div class="column column-30">
-          <h4 class="footer-col-title">Навигация</h4>
-          <ul class="footer-links">
-            <li><a href="index.html">Главная</a></li>
-            <li><a href="about.html">О Serverless</a></li>
-            <li><a href="architecture.html">Архитектура</a></li>
-            <li><a href="platforms.html">Платформы</a></li>
-            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
-          </ul>
-        </div>
-        <div class="column column-30">
-          <h4 class="footer-col-title">Материалы</h4>
-          <ul class="footer-links">
-            <li><a href="use-cases.html">Примеры использования</a></li>
-            <li><a href="tutorial.html">Практика написания кода</a></li>
-            <li><a href="security.html">Безопасность систем</a></li>
-            <li><a href="glossary.html">Словарь терминов</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <div>© 2026 Serverless. Все права защищены.</div>
-        <div>Студент: Ананьин Е. В. | CSS-фреймворк Milligram</div>
-      </div>
-    </div>
-  </footer>
+В VS Code можно использовать расширение **Live Server** (кнопка «Go Live» в строке состояния).
 
-  <script src="js/script.js"></script>
-</body>
-</html>
+---
+
+## 6. Инструкция по публикации на GitHub Pages
+
+1. Убедитесь, что у вас установлен Git и создан аккаунт на [GitHub](https://github.com).
+2. Создайте новый публичный репозиторий с названием `serverless-hub`.
+3. Откройте терминал в папке проекта `serverless-hub` и выполните команды:
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit: Serverless Hub project"
+   git branch -M main
+   git remote add origin https://github.com/<ВАШ_ЛОГИН_GITHUB>/serverless-hub.git
+   git push -u origin main
+   ```
+4. В репозитории на GitHub перейдите в раздел **Settings** → **Pages**.
+5. В блоке **Build and deployment**:
+   * **Source:** выберите `Deploy from a branch`.
+   * **Branch:** выберите ветку `main` и папку `/(root)`.
+   * Нажмите **Save**.
+6. Через 1–2 минуты страница обновится, и сверху появится ссылка на опубликованный сайт вида:
+   `https://<ВАШ_ЛОГИН_GITHUB>.github.io/serverless-hub/`
+7. Внесите полученные ссылки в файлы `README.md` и `read.md`, сделайте коммит и отправьте изменения:
+   ```bash
+   git add README.md read.md
+   git commit -m "Update links to published GitHub Pages"
+   git push
+   ```
+
+---
+
+## 7. Авторство и лицензия
+
+* Разработчик: студент **Ананьин Ефим Вадимович**
+* Дисциплина: «Использование CSS-фреймворков»
+* Все материалы подготовлены в образовательных целях.
