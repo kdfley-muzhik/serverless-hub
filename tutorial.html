@@ -1,15 +1,386 @@
-# Сведения об учебном проекте
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Практика: Создание первой Serverless функции на JavaScript | Serverless</title>
+  <meta name="description" content="Пошаговый туториал по созданию бессерверной функции на JavaScript/Node.js без необходимости регистрации в облаке. Интерактивный симулятор вызова функции.">
+  <meta name="author" content="Ананьин Ефим Вадимович">
 
-**ФИО студента:** Ананьин Ефим Вадимович.
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
-**Группа:** 835.
+  <!-- Favicon: официальная иконка Milligram CSS -->
+  <link rel="icon" type="image/svg+xml" href="images/milligram-logo.svg">
 
-**Тема проекта:** № 34 — Бессерверная архитектура (Serverless).
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
 
-**Название проекта:** Serverless.
+  <!-- Шапка сайта -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="brand-wrapper" aria-label="Serverless Главная">
+          <img src="images/logo.svg" alt="Логотип Serverless" class="brand-logo" width="38" height="38">
+          <span class="brand-name">Serverless</span>
+        </a>
 
-**CSS-фреймворк:** Milligram (№ 7).
+        <nav class="site-nav" aria-label="Основная навигация">
+          <ul>
+            <li><a href="index.html" class="nav-link">Главная</a></li>
+            <li><a href="about.html" class="nav-link">О Serverless</a></li>
+            <li><a href="architecture.html" class="nav-link">Архитектура</a></li>
+            <li><a href="platforms.html" class="nav-link">Платформы</a></li>
+            <li><a href="pros-cons.html" class="nav-link">Плюсы и минусы</a></li>
+            <li><a href="use-cases.html" class="nav-link">Примеры</a></li>
+            <li><a href="tutorial.html" class="nav-link active">Практика</a></li>
+            <li><a href="security.html" class="nav-link">Безопасность</a></li>
+            <li><a href="comparison.html" class="nav-link">Сравнение</a></li>
+            <li><a href="glossary.html" class="nav-link">Словарь</a></li>
+          </ul>
+        </nav>
 
-**Ссылка на работающий сайт GitHub Pages:** https://kdfley-muzhik.github.io/serverless-hub/
+                <div class="header-actions">
+          <button id="theme-toggle" class="theme-toggle-btn" type="button" title="Переключить тему оформления" aria-label="Переключить тему">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button id="burger-btn" class="burger-btn" type="button" title="Открыть мобильное меню" aria-label="Открыть мобильное меню">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-**Ссылка на репозиторий GitHub:** https://github.com/kdfley-muzhik/serverless-hub
+  <!-- Мобильное меню -->
+  <div id="mobile-nav-overlay" class="mobile-nav-overlay" aria-hidden="true"></div>
+  <aside id="mobile-nav-drawer" class="mobile-nav-drawer" aria-label="Мобильное меню">
+    <div class="mobile-nav-header">
+      <span class="brand-name">Serverless</span>
+      <button id="mobile-nav-close" class="button-clear" type="button" aria-label="Закрыть меню" style="font-size: 2.4rem; padding: 0;">✕</button>
+    </div>
+    <ul class="mobile-nav-list">
+      <li><a href="index.html" class="mobile-nav-link">Главная страница</a></li>
+      <li><a href="about.html" class="mobile-nav-link">Что такое Serverless</a></li>
+      <li><a href="architecture.html" class="mobile-nav-link">Архитектура систем</a></li>
+      <li><a href="platforms.html" class="mobile-nav-link">Облачные платформы</a></li>
+      <li><a href="pros-cons.html" class="mobile-nav-link">Плюсы и минусы</a></li>
+      <li><a href="use-cases.html" class="mobile-nav-link">Примеры использования</a></li>
+      <li><a href="tutorial.html" class="mobile-nav-link active">Практический урок</a></li>
+      <li><a href="security.html" class="mobile-nav-link">Безопасность и IAM</a></li>
+      <li><a href="comparison.html" class="mobile-nav-link">Сравнение архитектур</a></li>
+      <li><a href="glossary.html" class="mobile-nav-link">Словарь и ресурсы</a></li>
+    </ul>
+  </aside>
+
+  <!-- Контент страницы -->
+  <div class="container main-wrapper">
+    <header class="page-header-block">
+      <h1 class="page-title">Практика: Создание первой Serverless функции</h1>
+      <p class="page-lead">
+        Пошаговое руководство по разработке и отладке бессерверного микросервиса на JavaScript (Node.js). Изучите структуру Handler, формат событий Event и протестируйте код прямо в браузере.
+      </p>
+    </header>
+
+    <div class="row">
+      <main class="column column-75">
+
+        <!-- Введение к уроку -->
+        <section id="intro-tutorial" style="margin-bottom: 3.5rem;">
+          <h2>О практическом уроке</h2>
+          <p>
+            Для освоения бессерверного программирования <strong>не требуется привязывать банковскую карту</strong> или регистрироваться в платных облачных сервисах. Вся концепция FaaS строится на стандартной функции-обработчике (Handler), принимающей два аргумента:
+          </p>
+          <ul>
+            <li><code>event</code> — JSON-объект с данными входящего запроса (HTTP-метод, заголовки, query-параметры, тело запроса).</li>
+            <li><code>context</code> — служебный объект среды исполнения (ID вызова функции, оставшееся время таймаута, лимиты памяти).</li>
+          </ul>
+        </section>
+
+        <!-- Шаг 1: Структура проекта -->
+        <section id="step-1" style="margin-bottom: 3.5rem;">
+          <h3>Шаг 1. Подготовка структуры проекта</h3>
+          <p>Создайте локальную папку для нашего микросервиса. Минимальная структура состоит всего из одного файла кода:</p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span class="code-lang">Файловая структура</span>
+              <button class="copy-btn" type="button">Копировать</button>
+            </div>
+            <pre><code>my-serverless-service/
+├── handler.js        // Код функции-обработчика
+├── package.json      // Манифест зависимостей Node.js
+└── test-event.json   // Локальный тестовый JSON-запрос</code></pre>
+          </div>
+        </section>
+
+        <!-- Шаг 2: Написание кода функции handler.js -->
+        <section id="step-2" style="margin-bottom: 3.5rem;">
+          <h3>Шаг 2. Написание кода функции (handler.js)</h3>
+          <p>
+            Наш микросервис обрабатывает входящие HTTP-запросы к каталогу товаров (<code>/api/items</code>): поддерживает чтение (GET) и добавление новых записей (POST):
+          </p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span class="code-lang">JavaScript (handler.js)</span>
+              <button class="copy-btn" type="button">Копировать код</button>
+            </div>
+            <pre><code>/**
+ * Serverless Handler — Обработчик HTTP-запросов API Gateway
+ * @param {Object} event - Объект события от API Gateway
+ * @param {Object} context - Контекст выполнения функции в облаке
+ * @returns {Promise&lt;Object&gt;} HTTP Response со статус-кодом, заголовками и телом
+ */
+exports.mainHandler = async (event, context) => {
+  console.log(`[INFO] Получен вызов. Request ID: ${context?.awsRequestId || 'local-test'}`);
+
+  // 1. Извлечение HTTP-метода и пути запроса
+  const httpMethod = event.httpMethod || event.requestContext?.http?.method || 'GET';
+  const path = event.rawPath || event.path || '/';
+
+  // 2. Стандартные CORS-заголовки ответа
+  const responseHeaders = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type,Authorization'
+  };
+
+  try {
+    // 3. Обработка GET-запроса на получение списка
+    if (httpMethod === 'GET' &amp;&amp; path === '/api/items') {
+      const itemsList = [
+        { id: 1, name: 'Бессерверная функция A', type: 'FaaS' },
+        { id: 2, name: 'Очередь сообщений SQS', type: 'Queue' }
+      ];
+
+      return {
+        statusCode: 200,
+        headers: responseHeaders,
+        body: JSON.stringify({
+          success: true,
+          count: itemsList.length,
+          data: itemsList
+        })
+      };
+    }
+
+    // 4. Обработка POST-запроса на добавление элемента
+    if (httpMethod === 'POST' &amp;&amp; path === '/api/items') {
+      const payload = event.body ? JSON.parse(event.body) : {};
+      
+      if (!payload.name) {
+        return {
+          statusCode: 400,
+          headers: responseHeaders,
+          body: JSON.stringify({ success: false, error: 'Поле "name" обязательно' })
+        };
+      }
+
+      return {
+        statusCode: 201,
+        headers: responseHeaders,
+        body: JSON.stringify({
+          success: true,
+          message: 'Запись успешно создана в BaaS базе',
+          createdItem: { id: Date.now(), name: payload.name }
+        })
+      };
+    }
+
+    // 5. Обработка несуществующих маршрутов (404)
+    return {
+      statusCode: 404,
+      headers: responseHeaders,
+      body: JSON.stringify({
+        success: false,
+        error: `Маршрут ${httpMethod} ${path} не найден`
+      })
+    };
+
+  } catch (error) {
+    console.error('[ERROR] Ошибка выполнения хендлера:', error);
+    return {
+      statusCode: 500,
+      headers: responseHeaders,
+      body: JSON.stringify({ success: false, error: 'Internal Server Error' })
+    };
+  }
+};</code></pre>
+          </div>
+        </section>
+
+        <!-- Шаг 3: Разбор входных и выходных данных -->
+        <section id="step-3" style="margin-bottom: 3.5rem;">
+          <h3>Шаг 3. Формат входного события (Event) и ответа (Response)</h3>
+          <p>
+            Входной объект формируется API Gateway и содержит полную информацию о клиенте:
+          </p>
+
+          <div class="row">
+            <div class="column column-50">
+              <div class="code-box">
+                <div class="code-header">
+                  <span class="code-lang">Вход: event.json</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>{
+  "rawPath": "/api/items",
+  "requestContext": {
+    "http": {
+      "method": "GET",
+      "sourceIp": "192.168.1.1"
+    }
+  },
+  "headers": {
+    "user-agent": "Browser/1.0"
+  },
+  "queryStringParameters": {
+    "limit": "10"
+  }
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="column column-50">
+              <div class="code-box">
+                <div class="code-header">
+                  <span class="code-lang">Выход: response.json</span>
+                  <button class="copy-btn" type="button">Копировать</button>
+                </div>
+                <pre><code>{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  },
+  "body": "{\"success\":true,\"count\":2}"
+}</code></pre>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Интерактивный симулятор функций прямо на странице -->
+        <section id="simulator" style="margin-bottom: 4rem;">
+          <h2>Интерактивный симулятор Serverless Handler</h2>
+          <p>
+            Проверьте работу функции прямо здесь! Выберите HTTP-метод и путь запроса, нажмите кнопку <strong>«Запустить функцию»</strong> и наблюдайте, как симулятор генерирует событие API Gateway, передаёт его в хендлер и возвращает ответ:
+          </p>
+
+          <div class="simulator-box">
+            <div class="row">
+              <div class="column column-33">
+                <label for="sim-method">HTTP Метод:</label>
+                <select id="sim-method">
+                  <option value="GET">GET (Чтение списка)</option>
+                  <option value="POST">POST (Создание записи)</option>
+                  <option value="DELETE">DELETE (Удаление)</option>
+                </select>
+              </div>
+              <div class="column column-40">
+                <label for="sim-path">Маршрут (API Path):</label>
+                <select id="sim-path">
+                  <option value="/api/items">/api/items (Существующий)</option>
+                  <option value="/api/unknown">/api/unknown (Несуществующий 404)</option>
+                </select>
+              </div>
+              <div class="column column-25" style="display: flex; align-items: flex-end;">
+                <button id="run-simulator-btn" class="button" type="button" style="width: 100%; margin-bottom: 1.5rem;">
+                  ⚡ Запустить функцию
+                </button>
+              </div>
+            </div>
+
+            <label for="simulator-output">Журнал выполнения и HTTP Response:</label>
+            <div id="simulator-output" class="simulator-output" tabindex="0" role="region" aria-label="Консоль выполнения функции">// Нажмите «Запустить функцию» для отправки запроса в бессерверный обработчик...</div>
+          </div>
+        </section>
+
+      </main>
+
+      <!-- Сайдбар -->
+      <aside class="column column-25 site-aside">
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Обратная связь
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Есть вопрос или отзыв по учебному проекту? Напишите автору:</p>
+          <form class="subscribe-form" novalidate>
+            <input type="email" placeholder="Ваш email" required aria-label="Email для связи">
+            <button type="submit" class="button" style="width: 100%;">Отправить</button>
+            <div class="subscribe-feedback" role="alert"></div>
+          </form>
+        </div>
+
+        <div class="aside-widget">
+          <h3 class="widget-title">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            Следующая тема
+          </h3>
+          <p style="font-size: 1.35rem; margin-bottom: 1.2rem;">Как защитить функцию от атак и правильно настроить права доступа.</p>
+          <a href="security.html" class="button button-outline" style="width: 100%;">Безопасность FaaS →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Кнопка возврата наверх -->
+  <button id="back-to-top" class="back-to-top" type="button" title="Вернуться к началу страницы" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="19" x2="12" y2="5"></line>
+      <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+  </button>
+
+  <!-- Подвал сайта -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="column column-40">
+          <h4 class="footer-col-title">Serverless</h4>
+          <p>Учебный проект по дисциплине «Использование CSS-фреймворков». Разработан с использованием Milligram CSS.</p>
+          <p style="font-size: 1.3rem;">
+            <strong>Студент:</strong> Ананьин Ефим Вадимович<br>
+            <strong>Тема № 34:</strong> Бессерверная архитектура (Serverless)<br>
+            <span class="footer-framework-tag">
+              <img src="images/milligram-logo.svg" alt="Milligram" width="16" height="16">
+              <strong>CSS-фреймворк:</strong> <a href="https://milligram.io" target="_blank" rel="noopener">Milligram.io</a> (v1.4.1)
+            </span>
+          </p>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Навигация</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Главная</a></li>
+            <li><a href="about.html">О Serverless</a></li>
+            <li><a href="architecture.html">Архитектура</a></li>
+            <li><a href="platforms.html">Платформы</a></li>
+            <li><a href="pros-cons.html">Плюсы и минусы</a></li>
+          </ul>
+        </div>
+        <div class="column column-30">
+          <h4 class="footer-col-title">Материалы</h4>
+          <ul class="footer-links">
+            <li><a href="tutorial.html">Практика и код</a></li>
+            <li><a href="security.html">Безопасность систем</a></li>
+            <li><a href="comparison.html">Сравнение архитектур</a></li>
+            <li><a href="glossary.html">Словарь терминов</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© 2026 Serverless. Все права защищены.</div>
+        <div>Студент: Ананьин Е. В. | CSS-фреймворк Milligram</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
